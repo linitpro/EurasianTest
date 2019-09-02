@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EurasianTest", "EurasianTes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EurasianTest.DAL", "EurasianTest.DAL\EurasianTest.DAL.csproj", "{A1979B2C-0508-4850-994C-B18FF0F5D7E5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EurasianTest.Core", "EurasianTest.Core\EurasianTest.Core.csproj", "{2116E2ED-C963-400F-8B27-543C7F8A18AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{A1979B2C-0508-4850-994C-B18FF0F5D7E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1979B2C-0508-4850-994C-B18FF0F5D7E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1979B2C-0508-4850-994C-B18FF0F5D7E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2116E2ED-C963-400F-8B27-543C7F8A18AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2116E2ED-C963-400F-8B27-543C7F8A18AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2116E2ED-C963-400F-8B27-543C7F8A18AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2116E2ED-C963-400F-8B27-543C7F8A18AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
