@@ -4,8 +4,6 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using AutoMapper;
-using EurasianTest.Code.Services;
-using EurasianTest.Code.Services.Interfaces;
 using EurasianTest.Core;
 using EurasianTest.DAL;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -48,11 +46,13 @@ namespace EurasianTest
             });
 
             services.AddAuthorization();
-            services.AddTransient<IAuthorizationService, AuthorizationService>();
             
             services.RegisterCoreTypes();
 
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            services.AddAutoMapper(
+                Assembly.GetExecutingAssembly(), 
+                Assembly.GetAssembly(typeof(EurasianTest.Core.Components.GetUsersComponent.Models.GetUsersProfile
+                )));
 
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddEntityFrameworkNpgsql().AddDbContext<DataContext>(options =>

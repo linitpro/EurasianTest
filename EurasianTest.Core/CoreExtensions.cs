@@ -1,4 +1,5 @@
 ﻿using EurasianTest.Core.Components.AuthorizationComponent;
+using EurasianTest.Core.Components.GetUsersComponent;
 using EurasianTest.Core.Components.OuterRegistrationComponent;
 using EurasianTest.Core.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +17,7 @@ namespace EurasianTest.Core
 
             services.AddTransient<OuterRegistrationCommand>();
             services.AddTransient<AuthorizationCommand>();
+            services.AddTransient<GetUsersCommand>();
 
             return services;
         }

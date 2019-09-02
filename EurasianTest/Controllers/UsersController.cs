@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EurasianTest.Core.Components.GetUsersComponent;
 using EurasianTest.Core.Components.OuterRegistrationComponent;
 using EurasianTest.Core.Components.OuterRegistrationComponent.Models;
 using EurasianTest.Core.Infrastructure;
@@ -20,11 +21,16 @@ namespace EurasianTest.Controllers
             this.unitOfWork = unitOfWork;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
+        {
+            var command = this.unitOfWork.Create<GetUsersCommand>();
+            return View(await command.ExecuteAsync(new Core.Components.GetUsersComponent.Models.GetUsersViewModel()));
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Details([FromRoute]Int64 id)
         {
             return View();
         }
-
-        
     }
 }

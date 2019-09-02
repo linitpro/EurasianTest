@@ -3,6 +3,30 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@model EurasianTest.Core.Components.GetUsersComponent.Models.GetUsersViewModel
 
-<h1>Index</h1>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Эл. почта</th>
+            <th>Роль</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Users.Count; i++)
+        {
+        <tr>
+            <td>@(i + 1)</td>
+            <td>@Model.Users[i].Email</td>
+            <td>@Model.Users[i].Role</td>
+            <td>
+                <a asp-action="Details" asp-controller="Users" asp-route-id="@Model.Users[i].Id">Детали</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
 

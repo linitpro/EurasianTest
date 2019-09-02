@@ -23,4 +23,9 @@
     <ProjectReference Include="..\EurasianTest.DAL\EurasianTest.DAL.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="Code\Services\Interfaces\" />
+  </ItemGroup>
+
 </Project>

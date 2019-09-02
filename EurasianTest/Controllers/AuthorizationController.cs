@@ -35,6 +35,8 @@ namespace EurasianTest.Controllers
                 new ClaimsPrincipal(id),
                 new AuthenticationProperties()
                 {
+                    ExpiresUtc = DateTimeOffset.UtcNow.AddHours(24),
+                    AllowRefresh = model.RememberMe,
                     IsPersistent = model.RememberMe
                 });
 

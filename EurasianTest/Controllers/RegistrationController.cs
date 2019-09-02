@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using EurasianTest.Code.Services.Interfaces;
 using EurasianTest.Core.Components.AuthorizationComponent;
 using EurasianTest.Core.Components.AuthorizationComponent.Models;
 using EurasianTest.Core.Components.OuterRegistrationComponent;
@@ -15,13 +14,11 @@ namespace EurasianTest.Controllers
     public class RegistrationController : Controller
     {
         private readonly UnitOfWork unitOfWork;
-        private readonly IAuthorizationService authorizationService;
 
         public RegistrationController(UnitOfWork unitOfWork
-            , IAuthorizationService authorizationService)
+            )
         {
             this.unitOfWork = unitOfWork ?? throw new NotImplementedException(nameof(UnitOfWork));
-            this.authorizationService = authorizationService ?? throw new NotImplementedException(nameof(IAuthorizationService));
         }
         
         [HttpGet]
