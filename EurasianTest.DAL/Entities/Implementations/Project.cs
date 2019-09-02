@@ -21,5 +21,7 @@ namespace EurasianTest.DAL.Entities.Implementations
         /// Задачи проекта
         /// </summary>
         public List<Task> Tasks { set; get; }
+
+        public List<ProjectAdministrator> ProjectAdministrators { set; get; }
     }
 }

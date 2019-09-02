@@ -20,6 +20,10 @@ namespace EurasianTest.DAL.Configurations
             builder.Property(x => x.Role).IsRequired();
             builder.Property(x => x.Salt).IsRequired().HasMaxLength(15);
             builder.Property(x => x.Updated);
+
+            builder.HasMany(x => x.History).WithOne(x => x.User).HasForeignKey(x => x.UserId);
+            builder.HasMany(x => x.SendedHistory).WithOne(x => x.OldUser).HasForeignKey(x => x.OldUserId);
+            builder.HasMany(x => x.RecievedHistory).WithOne(x => x.NewUser).HasForeignKey(x => x.NewUserId);
         }
     }
 }

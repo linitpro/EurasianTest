@@ -42,5 +42,25 @@ namespace EurasianTest.DAL.Entities.Implementations
         /// Ссылка напользователя, изменившего статус
         /// </summary>
         public Int64 UserId { set; get; }
+
+        /// <summary>
+        /// Старый пользователь, на ком была задача
+        /// </summary>
+        public User OldUser { set; get; }
+
+        /// <summary>
+        /// Старый пользователь, на ком была задача
+        /// </summary>
+        public Int64 OldUserId { set; get; }
+
+        /// <summary>
+        /// Новый пользователь, на кого поставили задачу
+        /// </summary>
+        public User NewUser { set; get; }
+
+        /// <summary>
+        /// Новый пользователь, на кого поставили задачу
+        /// </summary>
+        public Int64 NewUserId { set; get; }
     }
 }

@@ -8,4 +8,8 @@
     <Folder Include="Profiles\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\EurasianTest.DAL\EurasianTest.DAL.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -9,14 +9,43 @@ namespace EurasianTest.Core.Components.OuterRegistrationComponent.Models
     /// </summary>
     public class OuterRegistrationViewModel
     {
+        public OuterRegistrationViewModel()
+        {
+            this.email = "";
+            this.password = "";
+        }
+
+        private String email;
+        private String password;
+
         /// <summary>
         /// Эл.почта
         /// </summary>
-        public String Email { set; get; }
+        public String Email
+        {
+            set
+            {
+                this.email = value;
+            }
+            get
+            {
+                return this.email.Trim().ToLower();
+            }
+        }
 
         /// <summary>
         /// Пароль
         /// </summary>
-        public String Password { set; get; }
+        public String Password
+        {
+            set
+            {
+                this.password = value;
+            }
+            get
+            {
+                return this.password.Trim();
+            }
+        }
     }
 }

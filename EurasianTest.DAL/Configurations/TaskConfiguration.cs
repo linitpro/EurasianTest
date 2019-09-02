@@ -7,19 +7,22 @@ using System.Text;
 
 namespace EurasianTest.DAL.Configurations
 {
-    public class UserConfiguration: IEntityTypeConfiguration<User>
+    public class TaskConfiguration: IEntityTypeConfiguration<Task>
     {
-        public void Configure(EntityTypeBuilder<User> builder)
+        public void Configure(EntityTypeBuilder<Task> builder)
         {
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.Created).IsRequired();
-            builder.Property(x => x.Email).IsRequired().HasMaxLength(255);
             builder.Property(x => x.IsDeleted).IsRequired();
-            builder.Property(x => x.Password).IsRequired().HasMaxLength(255);
-            builder.Property(x => x.Role).IsRequired();
-            builder.Property(x => x.Salt).IsRequired().HasMaxLength(15);
             builder.Property(x => x.Updated);
+            builder.Property(x => x.Description).IsRequired();
+            builder.Property(x => x.Name).IsRequired();
+            builder.Property(x => x.Status).IsRequired();
+
+            builder.HasOne(x => x.Project).WithMany(x => x.Tasks).HasForeignKey(x => x.ProjectId);
+            builder.HasMany(x => x.History).WithOne(x => x.Task).HasForeignKey(x => x.TaskId);
+
         }
     }
 }

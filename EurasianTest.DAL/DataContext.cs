@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EurasianTest.DAL.Configurations;
+using EurasianTest.DAL.Entities.Implementations;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,10 +14,38 @@ namespace EurasianTest.DAL
 
         }
 
+        /// <summary>
+        /// Пользователи
+        /// </summary>
+        public DbSet<User> Users { set; get; }
+
+        /// <summary>
+        /// Истории задач
+        /// </summary>
+        public DbSet<TaskHistory> TaskHistories { set; get; }
+
+        /// <summary>
+        /// Задачи
+        /// </summary>
+        public DbSet<Task> Tasks { set; get; }
+
+        /// <summary>
+        /// Проекты
+        /// </summary>
+        public DbSet<Project> Projects { set; get; }
+
+        /// <summary>
+        /// Администраторы проектов
+        /// </summary>
+        public DbSet<ProjectAdministrator> ProjectAdministrators { set; get; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // modelBuilder.ApplyConfiguration(new UserConfiguration());
-            // modelBuilder.ApplyConfiguration(new NotificationConfiguration());
+            modelBuilder.ApplyConfiguration(new ProjectAdministratorConfiguration());
+            modelBuilder.ApplyConfiguration(new ProjectConfiguration());
+            modelBuilder.ApplyConfiguration(new TaskConfiguration());
+            modelBuilder.ApplyConfiguration(new TaskHistoryConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
         }
     }
 }
