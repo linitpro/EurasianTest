@@ -48,6 +48,7 @@ namespace EurasianTest
             services.AddAuthorization();
             
             services.RegisterCoreTypes();
+            services.AddHttpContextAccessor();
 
             services.AddAutoMapper(
                 Assembly.GetExecutingAssembly(), 

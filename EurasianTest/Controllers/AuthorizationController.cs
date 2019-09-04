@@ -1,4 +1,5 @@
 ﻿using EurasianTest.Core.Components.AuthorizationComponent.Models;
+using EurasianTest.DAL.Entities.Enums;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +24,8 @@ namespace EurasianTest.Controllers
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Email, model.Login)
+                new Claim(ClaimTypes.Email, model.Login), // TODO нужна команда авторизации
+                new Claim(ClaimTypes.Role, Role.Administrator.ToString())
             };
 
             // создаем объект ClaimsIdentity

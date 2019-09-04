@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model EurasianTest.Core.Components.GetProjectDetailsComponent.Models.GetProjectDetailsViewModel
+
+<h1>Details</h1>
+
+<div class="container">
+    <form asp-controller="Projects" asp-action="Update" method="post">
+        <label>Название</label>
+        <input asp-for="Na" />
+    </form>
+</div>

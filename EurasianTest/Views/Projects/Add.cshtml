@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Add";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model EurasianTest.Core.Components.AddProjectComponent.Model.AddProjectViewModel
+
+<h1>Add</h1>
+
+<form asp-action="Add" method="post">
+    <label>Название</label>
+    <input asp-for="Name" type="text" class="form-control" />
+    <button class="btn btn-outline-success" type="submit">Добавить</button>
+</form>

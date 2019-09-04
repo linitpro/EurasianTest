@@ -8,7 +8,11 @@ namespace EurasianTest.Controllers
 {
     public class TasksController : Controller
     {
-        public IActionResult Index()
+        /// <summary>
+        /// Отображает всписок задач пользователя
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> Index()
         {
             return View();
         }
