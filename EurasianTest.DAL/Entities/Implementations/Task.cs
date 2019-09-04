@@ -38,6 +38,10 @@ namespace EurasianTest.DAL.Entities.Implementations
         /// </summary>
         public Int64 ProjectId { set; get; }
 
+        public User User { set; get; }
+
+        public Int64 UserId { set; get; }
+
         /// <summary>
         /// История задачи
         /// </summary>

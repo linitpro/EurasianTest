@@ -4,7 +4,10 @@ using EurasianTest.Core.Components.GetProjectDetailsComponent;
 using EurasianTest.Core.Components.GetProjectsComponent;
 using EurasianTest.Core.Components.GetUsersComponent;
 using EurasianTest.Core.Components.OuterRegistrationComponent;
+using EurasianTest.Core.Components.UpdateProjectComponent;
 using EurasianTest.Core.Infrastructure;
+using EurasianTest.Core.Queries.GetProjectDetailsStrategy;
+using EurasianTest.Core.Queries.GetProjectDetailsStrategy.Implementations;
 using EurasianTest.Core.Queries.GetProjectsStrategy;
 using EurasianTest.Core.Queries.GetProjectsStrategy.Implementations;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,7 +29,7 @@ namespace EurasianTest.Core
             services.AddTransient<GetProjectsCommand>();
             services.AddTransient<AddProjectCommand>();
             services.AddTransient<GetProjectDetailsCommand>();
-
+            services.AddTransient<UpdateProjectCommand>();
 
             services.AddScoped<IAuthContext, AuthContext>();
 
@@ -34,6 +37,11 @@ namespace EurasianTest.Core
             services.AddTransient<IGetProjectsQuery, UserGetProjectsQuery>();
             services.AddTransient<IGetProjectsQuery, ProjectAdministratorGetProjectsQuery>();
             services.AddTransient<IGetProjectsQuery, AdministratorGetProjectsQuery>();
+
+            services.AddTransient<GetProjectDetailsStrategy>();
+            services.AddTransient<IGetProjectDetailsQuery, AdministratorGetProjectDetailsQuery>();
+            services.AddTransient<IGetProjectDetailsQuery, ProjectAdministratorGetProjectDetailsQuery>();
+            services.AddTransient<IGetProjectDetailsQuery, UserGetProjectDetailsQuery>();
 
             return services;
         }

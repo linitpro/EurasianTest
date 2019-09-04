@@ -6,7 +6,7 @@
 
 <h1>Add</h1>
 
-<form asp-action="Add" method="post">
+<form asp-controller="Projects" asp-action="Add" method="post">
     <label>Название</label>
     <input asp-for="Name" type="text" class="form-control" />
     <button class="btn btn-outline-success" type="submit">Добавить</button>

@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace EurasianTest.Core.Components.GetProjectDetailsComponent.Models
+namespace EurasianTest.Core.Components.UpdateProjectComponent.Models
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public class GetProjectDetailsViewModel
+    public class UpdateProjectViewModel
     {
         /// <summary>
         /// Идентификатор проекта
@@ -18,10 +15,5 @@ namespace EurasianTest.Core.Components.GetProjectDetailsComponent.Models
         /// Название проекта
         /// </summary>
         public String Name { set; get; }
-
-        /// <summary>
-        /// Администраторы проекта
-        /// </summary>
-        public List<GetProjectDetailsUserViewModel> Users { set; get; }
     }
 }

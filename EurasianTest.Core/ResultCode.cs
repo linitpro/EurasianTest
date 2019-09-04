@@ -22,5 +22,10 @@ namespace EurasianTest.Core
         /// Некорректный пароль пользователя
         /// </summary>
         UserIncorrectPassword = -1002,
+
+        /// <summary>
+        /// Проект не найден
+        /// </summary>
+        ProjectNotFound = -2000,
     }
 }

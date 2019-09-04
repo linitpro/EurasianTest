@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EurasianTest.Core.Components.GetProjectDetailsComponent.Models;
 using EurasianTest.Core.Infrastructure;
+using EurasianTest.Core.Queries.GetProjectDetailsStrategy;
 using EurasianTest.DAL;
 using System;
 using System.Collections.Generic;
@@ -13,21 +14,21 @@ namespace EurasianTest.Core.Components.GetProjectDetailsComponent
     {
         private readonly DataContext dataContext;
         private readonly IMapper mapper;
+        private readonly GetProjectDetailsStrategy getProjectDetailsStrategy;
 
         public GetProjectDetailsCommand(DataContext dataContext
             , IMapper mapper
+            , GetProjectDetailsStrategy getProjectDetailsStrategy
             )
         {
             this.dataContext = dataContext;
             this.mapper = mapper;
+            this.getProjectDetailsStrategy = getProjectDetailsStrategy;
         }
 
-        public Task<GetProjectDetailsViewModel> ExecuteAsync(Int64 request)
+        public async Task<GetProjectDetailsViewModel> ExecuteAsync(Int64 request)
         {
-            // получаем детали проекта 
-            // и его администраторов
-
-            throw new NotImplementedException();
+            return await this.getProjectDetailsStrategy.Query.ExecuteAsync(request);
         }
     }
 }

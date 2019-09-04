@@ -19,7 +19,7 @@ namespace EurasianTest.Core.Factories
                 Created = DateTime.Now,
                 Email = email,
                 Salt = credetial.Salt,
-                Role = Role.ProjectAdministrator,
+                Role = Role.User,
                 Password = credetial.HashedPassword
             };
         }
