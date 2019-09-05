@@ -1,4 +1,5 @@
-﻿using EurasianTest.Core.Infrastructure;
+﻿using EurasianTest.Core.Components.AddTaskComponent.Models;
+using EurasianTest.Core.Infrastructure;
 using EurasianTest.DAL;
 using System;
 using System.Collections.Generic;
