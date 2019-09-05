@@ -27,6 +27,11 @@ namespace EurasianTest.DAL.Entities.Enums
         /// <summary>
         /// Закрыта
         /// </summary>
-        Closed = 3
+        Closed = 3,
+
+        /// <summary>
+        /// Возвращена
+        /// </summary>
+        Returned = 4,
     }
 }

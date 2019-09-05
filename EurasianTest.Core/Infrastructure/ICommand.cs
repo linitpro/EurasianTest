@@ -11,4 +11,9 @@ namespace EurasianTest.Core.Infrastructure
     {
         Task<TResponse> ExecuteAsync(TRequest request);
     }
+
+    public interface ICommand<TResponse>: ICommand
+    {
+        Task<TResponse> ExecuteAsync();
+    }
 }

@@ -49,6 +49,7 @@ namespace EurasianTest.Core.Components.ChangeTaskStatusComponent
                     oldData.Status = request.Status;
                     oldData.UserId = request.UserId;
 
+                    this.dataContext.Update(oldData);
                     await this.dataContext.SaveChangesAsync();
                     transaction.Commit();
                 }

@@ -1,5 +1,6 @@
 ﻿using EurasianTest.DAL.Configurations;
 using EurasianTest.DAL.Entities.Implementations;
+using EurasianTest.DAL.SelectionsDTOs;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace EurasianTest.DAL
 {
-    public class DataContext: DbContext
+    public class DataContext : DbContext
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
@@ -47,5 +48,9 @@ namespace EurasianTest.DAL
             modelBuilder.ApplyConfiguration(new TaskHistoryConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration());
         }
+
+        public DbQuery<GetHomeAdminInfoDTO> GetHomeAdminInfoQuery { set; get; }
+
+        public DbQuery<GetTaskDTO> GetTasksQuery { set; get; }
     }
 }

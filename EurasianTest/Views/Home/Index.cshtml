@@ -1,27 +1,66 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@model EurasianTest.Core.Components.GetHomeInfoModel.Model.GetHomeInfoViewModel
+@inject EurasianTest.Core.Infrastructure.IAuthContext authContext
+<!-- TODO Здесь добавить для администратова -->
+@if (authContext.CurrentUser.Role != EurasianTest.DAL.Entities.Enums.Role.User)
+{
+    <div class="container">
+        <div class="card-deck mb-3 text-center">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">
+                        @(Model.AdminInfo?.ReturnedForWorkInTheWeek.ToString() ?? "???")
+                    </h1>
+                    <h3>
+                        задач вернулось повторно
+                    </h3>
+                </div>
+            </div>
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">
+                        @(Model.AdminInfo?.FinishedDateOnTheWeek.ToString() ?? "???")
+                    </h1>
+                    <h3>
+                        задач завершено на этой неделе
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 
+<!-- 1. В работе у пользователя -->
+<!-- 2. Нужно начать делать на след.неделе -->
 <div class="container">
     <div class="card-deck mb-3 text-center">
         <div class="card mb-4 shadow-sm">
             <div class="card-body">
-                <h1 class="card-title pricing-card-title">
-                    123
-                </h1>
-                <h3>
-                    задач вернулось повторно
-                </h3>
+                <h4>
+                    В работе у пользователя
+                </h4>
+                @for (int i = 0; i < Model.TaskForWork.Count; i++)
+                {
+                    <p>
+                        123
+                    </p>
+                }
             </div>
         </div>
         <div class="card mb-4 shadow-sm">
             <div class="card-body">
-                <h1 class="card-title pricing-card-title">123</h1>
-                <h3>
-                    задач завершено на этой неделе
-                </h3>
+                <h4>
+                    На следующей неделе
+                </h4>
+                @for (int i = 0; i < Model.TasksStartOnNextWeek.Count; i++)
+                {
+                    <p>
+                        123
+                    </p>
+                }
             </div>
         </div>
     </div>
-
 </div>

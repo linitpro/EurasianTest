@@ -19,6 +19,8 @@ namespace EurasianTest.DAL.Configurations
             builder.Property(x => x.Description).IsRequired();
             builder.Property(x => x.Name).IsRequired();
             builder.Property(x => x.Status).IsRequired();
+            builder.Property(x => x.Started).IsRequired();
+            builder.Property(x => x.Expired).IsRequired();
 
             builder.HasOne(x => x.Project).WithMany(x => x.Tasks).HasForeignKey(x => x.ProjectId);
             builder.HasMany(x => x.History).WithOne(x => x.Task).HasForeignKey(x => x.TaskId);

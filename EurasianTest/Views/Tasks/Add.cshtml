@@ -14,6 +14,13 @@
     <input asp-for="Name" type="text" class="form-control" />
     <label>Описание</label>
     <input asp-for="Description" type="text" class="form-control" />
+
+    <label>Дата начала</label>
+    <input asp-for="Started" type="text" class="form-control" />
+
+    <label>Дата завершения</label>
+    <input asp-for="Expired" type="text" class="form-control" />
+
     <div class="form-group">
         <label>Проект</label>
         <select asp-for="ProjectId" asp-items="@(new SelectList(Model.Projects, nameof(ProjectViewModel.ProjectId), nameof(ProjectViewModel.Name)))" class="form-control"></select>

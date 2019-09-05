@@ -24,7 +24,11 @@ namespace EurasianTest.Core.Infrastructure
             {
                 return new User()
                 {
-                    Role = (Role)Enum.Parse(typeof(Role), httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value ?? "User")
+                    Role = (Role)Enum.Parse(typeof(Role), 
+                        httpContextAccessor.HttpContext.User.Claims
+                        .FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value ?? "User"),
+                    Id = Int64.Parse(httpContextAccessor.HttpContext.User.Claims
+                        .FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value ?? throw new ArgumentNullException("Calim.UserId"))
                 };
             }
         }

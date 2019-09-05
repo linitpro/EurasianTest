@@ -11,10 +11,10 @@ namespace EurasianTest.Core.Components.GetTasksComponent.Models
         public GetTasksProfile()
         {
             CreateMap<Task, GetTasksItemViewModel>()
-                .ForMember(dest => dest.Expired, opt => opt.MapFrom(src => DateTime.Now))
+                .ForMember(dest => dest.Expired, opt => opt.MapFrom(src => src.Expired))
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-                .ForMember(dest => dest.Started, opt => opt.MapFrom(src => DateTime.Now))
+                .ForMember(dest => dest.Started, opt => opt.MapFrom(src => src.Started))
                 .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.User));
         }
     }

@@ -4,6 +4,7 @@ using EurasianTest.Core.Components.AuthorizationComponent;
 using EurasianTest.Core.Components.ChangeTaskStatusComponent;
 using EurasianTest.Core.Components.DictionaryComponents.GetProjectsDictionaryComponent;
 using EurasianTest.Core.Components.DictionaryComponents.GetUsersDictionaryComponent;
+using EurasianTest.Core.Components.GetHomeInfoModel;
 using EurasianTest.Core.Components.GetProjectDetailsComponent;
 using EurasianTest.Core.Components.GetProjectsComponent;
 using EurasianTest.Core.Components.GetTaskDetailsComponent;
@@ -11,7 +12,10 @@ using EurasianTest.Core.Components.GetTasksComponent;
 using EurasianTest.Core.Components.GetUsersComponent;
 using EurasianTest.Core.Components.OuterRegistrationComponent;
 using EurasianTest.Core.Components.UpdateProjectComponent;
+using EurasianTest.Core.Components.UpdateTaskComponent;
 using EurasianTest.Core.Infrastructure;
+using EurasianTest.Core.Queries.GetHomeAdminInfoQuery;
+using EurasianTest.Core.Queries.GetHomeAdminInfoQuery.Implementations;
 using EurasianTest.Core.Queries.GetProjectDetailsStrategy;
 using EurasianTest.Core.Queries.GetProjectDetailsStrategy.Implementations;
 using EurasianTest.Core.Queries.GetProjectsStrategy;
@@ -42,6 +46,8 @@ namespace EurasianTest.Core
             services.AddTransient<GetTaskDetailsCommand>();
             services.AddTransient<GetTasksCommand>();
             services.AddTransient<ChangeTaskStatusCommand>();
+            services.AddTransient<UpdateTaskCommand>();
+            services.AddTransient<GetHomeInfoCommand>();
 
             services.AddScoped<IAuthContext, AuthContext>();
 
@@ -54,6 +60,11 @@ namespace EurasianTest.Core
             services.AddTransient<IGetProjectDetailsQuery, AdministratorGetProjectDetailsQuery>();
             services.AddTransient<IGetProjectDetailsQuery, ProjectAdministratorGetProjectDetailsQuery>();
             services.AddTransient<IGetProjectDetailsQuery, UserGetProjectDetailsQuery>();
+
+            services.AddTransient<GetHomeadminInfoStrategy>();
+            services.AddTransient<IGetHomeadminInfoQuery, AdministratorGetHomeadminInfoQuery>();
+            services.AddTransient<IGetHomeadminInfoQuery, ProjectAdministratorGetHomeadminInfoQuery>();
+            services.AddTransient<IGetHomeadminInfoQuery, UserGetHomeadminInfoQuery>();
 
             return services;
         }

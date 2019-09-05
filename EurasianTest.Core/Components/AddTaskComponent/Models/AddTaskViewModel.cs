@@ -45,5 +45,15 @@ namespace EurasianTest.Core.Components.AddTaskComponent.Models
         /// Пользователи
         /// </summary>
         public List<UserViewModel> Users { set; get; }
+
+        /// <summary>
+        /// Дата начала задачи
+        /// </summary>
+        public DateTime Started { set; get; }
+
+        /// <summary>
+        /// Дата завершения задачи
+        /// </summary>
+        public DateTime Expired { set; get; }
     }
 }

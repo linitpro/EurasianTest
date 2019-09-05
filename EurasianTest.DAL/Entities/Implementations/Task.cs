@@ -46,5 +46,15 @@ namespace EurasianTest.DAL.Entities.Implementations
         /// История задачи
         /// </summary>
         public List<TaskHistory> History { set; get; }
+
+        /// <summary>
+        /// Дата начала задачи
+        /// </summary>
+        public DateTime Started { set; get; }
+
+        /// <summary>
+        /// Дата завершения задачи
+        /// </summary>
+        public DateTime Expired { set; get; }
     }
 }

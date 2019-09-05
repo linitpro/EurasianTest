@@ -82,7 +82,7 @@ namespace EurasianTest.Controllers
         /// Редактирование задачи
         /// </summary>
         /// <returns></returns>
-        [HttpGet("[action]")]
+        [HttpPost("[action]")]
         public async Task<IActionResult> Update([FromForm]UpdateTaskViewModel model)
         {
             var command = this.unitOfWork.Create<UpdateTaskCommand>();
@@ -95,7 +95,7 @@ namespace EurasianTest.Controllers
         /// Редактирование статуса и ответственного задачи
         /// </summary>
         /// <returns></returns>
-        [HttpGet("[action]")]
+        [HttpPost("[action]")]
         public async Task<IActionResult> UpdateStatus([FromForm]ChangeTaskStatusViewModel model)
         {
             var command = this.unitOfWork.Create<ChangeTaskStatusCommand>();
@@ -103,6 +103,11 @@ namespace EurasianTest.Controllers
             return Redirect($"/Tasks/Details/{model.Id}");
         }
 
+        /// <summary>
+        /// Показывает детали задачи
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("[action]/{id}")]
         public async Task<IActionResult> Details([FromRoute]Int64 id)
         {
