@@ -3,7 +3,8 @@
     ViewData["Title"] = "Add";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@using EurasianTest.Core.Models
+@using EurasianTest.Core.Components.DictionaryComponents.GetProjectsDictionaryComponent.Models
+@using EurasianTest.Core.Components.DictionaryComponents.GetUsersDictionaryComponent.Models
 @model EurasianTest.Core.Components.AddTaskComponent.Models.AddTaskViewModel
 <h1>Добавление новой задачи</h1>
 
@@ -19,7 +20,7 @@
     </div>
     <div class="form-group">
         <label>Назначить на</label>
-        <select asp-for="UserId" asp-items="@(new SelectList(Model.Users, nameof(UserViewModel.UserId), nameof(UserViewModel.Email)))" class="form-control" ></select>
+        <select asp-for="UserId" asp-items="@(new SelectList(Model.Users, nameof(UserViewModel.UserId), nameof(UserViewModel.Email)))" class="form-control"></select>
     </div>
 
     <button class="btn btn-outline-success" type="submit">Добавить</button>

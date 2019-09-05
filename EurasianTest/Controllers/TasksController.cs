@@ -2,8 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EurasianTest.Core.Components.AddTaskComponent;
 using EurasianTest.Core.Components.AddTaskComponent.Models;
+using EurasianTest.Core.Components.ChangeTaskStatusComponent;
+using EurasianTest.Core.Components.ChangeTaskStatusComponent.Models;
+using EurasianTest.Core.Components.DictionaryComponents.GetProjectsDictionaryComponent;
+using EurasianTest.Core.Components.DictionaryComponents.GetProjectsDictionaryComponent.Models;
+using EurasianTest.Core.Components.DictionaryComponents.GetUsersDictionaryComponent;
+using EurasianTest.Core.Components.DictionaryComponents.GetUsersDictionaryComponent.Models;
+using EurasianTest.Core.Components.GetTaskDetailsComponent;
+using EurasianTest.Core.Components.GetTasksComponent;
 using EurasianTest.Core.Components.GetTasksComponent.Models;
+using EurasianTest.Core.Components.UpdateTaskComponent;
 using EurasianTest.Core.Components.UpdateTaskComponent.Models;
 using EurasianTest.Core.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
@@ -25,11 +35,16 @@ namespace EurasianTest.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("[action]")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index([FromQuery]GetTasksViewModel model)
         {
+            var command = this.unitOfWork.Create<GetTasksCommand>();
+            
+            if(model == null)
+            {
+                model = new GetTasksViewModel();
+            }
 
-
-            return View(new GetTasksViewModel());
+            return View(await command.ExecuteAsync(model));
         }
 
         /// <summary>
@@ -39,7 +54,14 @@ namespace EurasianTest.Controllers
         [HttpGet("[action]")]
         public async Task<IActionResult> Add() // TODO перегрузить для возможности добавить к пользователю или проекту
         {
-            return View(new AddTaskViewModel());
+            var model = new AddTaskViewModel();
+            var userCommandResult = this.unitOfWork.Create<GetUsersDictionaryCommand>().ExecuteAsync(new GetUsersDictionaryRequestViewModel());
+            var projectCommandResult = this.unitOfWork.Create<GetProjectsDictionaryCommand>().ExecuteAsync(new GetProjectsDictionaryRequestViewModel());
+            Task.WaitAll(userCommandResult, projectCommandResult);
+            model.Projects = projectCommandResult.Result;
+            model.Users = userCommandResult.Result;
+
+            return View(model);
         }
 
         /// <summary>
@@ -50,9 +72,10 @@ namespace EurasianTest.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> Add([FromForm]AddTaskViewModel model)
         {
+            var command = this.unitOfWork.Create<AddTaskCommand>();
+            var result = await command.ExecuteAsync(model);
 
-
-            return View();
+            return Redirect($"/Tasks/Details/{result}");
         }
 
         /// <summary>
@@ -60,20 +83,32 @@ namespace EurasianTest.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("[action]")]
-        public async Task<IActionResult> Update()
+        public async Task<IActionResult> Update([FromForm]UpdateTaskViewModel model)
         {
-            return View(new UpdateTaskViewModel());
+            var command = this.unitOfWork.Create<UpdateTaskCommand>();
+            var result = await command.ExecuteAsync(model);
+
+            return Redirect($"/Tasks/Details/{model.Id}");
         }
 
         /// <summary>
-        /// Редактирование задачи
+        /// Редактирование статуса и ответственного задачи
         /// </summary>
-        /// <param name="model"></param>
         /// <returns></returns>
-        [HttpGet("[action]")] // TODO ограничение по ролям: админы
-        public async Task<IActionResult> Update([FromForm]UpdateTaskViewModel model)
+        [HttpGet("[action]")]
+        public async Task<IActionResult> UpdateStatus([FromForm]ChangeTaskStatusViewModel model)
         {
+            var command = this.unitOfWork.Create<ChangeTaskStatusCommand>();
+            var result = await command.ExecuteAsync(model);
             return Redirect($"/Tasks/Details/{model.Id}");
+        }
+
+        [HttpGet("[action]/{id}")]
+        public async Task<IActionResult> Details([FromRoute]Int64 id)
+        {
+            var command = this.unitOfWork.Create<GetTaskDetailsCommand>();
+            var result = await command.ExecuteAsync(id);
+            return View(result);
         }
     }
 }

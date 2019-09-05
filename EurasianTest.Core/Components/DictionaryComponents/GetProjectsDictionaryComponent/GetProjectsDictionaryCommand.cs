@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using EurasianTest.Core.Components.DictionaryComponents.GetUsersDictionaryComponent.Models;
+using EurasianTest.Core.Components.DictionaryComponents.GetProjectsDictionaryComponent.Models;
 using EurasianTest.Core.Infrastructure;
 using EurasianTest.DAL;
 using Microsoft.EntityFrameworkCore;
@@ -10,14 +10,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EurasianTest.Core.Components.DictionaryComponents.GetUsersDictionaryComponent
+namespace EurasianTest.Core.Components.DictionaryComponents.GetProjectsDictionaryComponent
 {
-    public class GetUsersDictionaryCommand: ICommand<GetUsersDictionaryRequestViewModel, List<UserViewModel>>
+    public class GetProjectsDictionaryCommand: ICommand<GetProjectsDictionaryRequestViewModel, List<ProjectViewModel>>
     {
         private readonly DataContext dataContext;
         private readonly IMapper mapper;
 
-        public GetUsersDictionaryCommand(DataContext dataContext
+        public GetProjectsDictionaryCommand(DataContext dataContext
             , IMapper mapper
             )
         {
@@ -25,12 +25,12 @@ namespace EurasianTest.Core.Components.DictionaryComponents.GetUsersDictionaryCo
             this.mapper = mapper ?? throw new NotImplementedException(nameof(IMapper));
         }
 
-        public async Task<List<UserViewModel>> ExecuteAsync(GetUsersDictionaryRequestViewModel request)
+        public async Task<List<ProjectViewModel>> ExecuteAsync(GetProjectsDictionaryRequestViewModel request)
         {
             return await this.dataContext
-                .Users
-                .Where(x => x.IsDeleted == false && request.Roles.Any(a => a == x.Role))
-                .ProjectTo<UserViewModel>(this.mapper.ConfigurationProvider)
+                .Projects
+                .Where(x => true) // TODO добавить разделение для админа проекта
+                .ProjectTo<ProjectViewModel>(this.mapper.ConfigurationProvider)
                 .ToListAsync();
         }
     }

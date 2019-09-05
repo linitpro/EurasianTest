@@ -52,5 +52,7 @@ namespace EurasianTest.DAL.Entities.Implementations
         /// История задач, котрые получил
         /// </summary>
         public List<TaskHistory> RecievedHistory { set; get; }
+
+        public List<Task> Tasks { set; get; }
     }
 }

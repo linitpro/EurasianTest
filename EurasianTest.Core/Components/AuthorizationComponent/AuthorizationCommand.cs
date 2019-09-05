@@ -2,6 +2,7 @@
 using EurasianTest.Core.Factories;
 using EurasianTest.Core.Infrastructure;
 using EurasianTest.DAL;
+using EurasianTest.DAL.Entities.Implementations;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,16 +11,16 @@ using System.Threading.Tasks;
 
 namespace EurasianTest.Core.Components.AuthorizationComponent
 {
-    public class AuthorizationCommand : ICommand<AuthorizationViewModel, AuthorizationViewModel>
+    public class AuthorizationCommand : ICommand<AuthorizationViewModel, User>
     {
         private readonly DataContext dataContext;
 
         public AuthorizationCommand(DataContext dataContext)
         {
-            this.dataContext = dataContext;
+            this.dataContext = dataContext ?? throw new NotImplementedException(nameof(DataContext));
         }
 
-        public async Task<AuthorizationViewModel> ExecuteAsync(AuthorizationViewModel request)
+        public async Task<User> ExecuteAsync(AuthorizationViewModel request)
         {
             var user = await this.dataContext.Users.FirstOrDefaultAsync(x => x.Email == request.Login);
 
@@ -33,7 +34,7 @@ namespace EurasianTest.Core.Components.AuthorizationComponent
                 throw new CoreException(ResultCode.UserIncorrectPassword);
             }
 
-            return request;
+            return user;
         }
     }
 }

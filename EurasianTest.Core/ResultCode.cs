@@ -9,6 +9,11 @@ namespace EurasianTest.Core
         Ok = 0,
 
         /// <summary>
+        /// Неопознанная ошибка
+        /// </summary>
+        GenericError = -999,
+
+        /// <summary>
         /// Пользователь уже существует
         /// </summary>
         UserAlreadyExist = -1000,
@@ -27,5 +32,11 @@ namespace EurasianTest.Core
         /// Проект не найден
         /// </summary>
         ProjectNotFound = -2000,
+
+        /// <summary>
+        /// Задача не найдена
+        /// </summary>
+        TasksNotFound = -3000,
+
     }
 }

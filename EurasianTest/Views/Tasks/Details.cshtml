@@ -1,0 +1,44 @@
+﻿@using EurasianTest.Core.Components.DictionaryComponents.GetUsersDictionaryComponent.Models
+@using EurasianTest.Core.Components.DictionaryComponents.GetProjectsDictionaryComponent.Models
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model EurasianTest.Core.Components.GetTaskDetailsComponent.Models.GetTaskDetailsViewModel
+<h1>Задача #@Model.Id</h1>
+
+<div class="card-group">
+    <div class="card">
+        <div class="card-body">
+            <form asp-action="Update" method="post" class="">
+                <input hidden asp-for="Id" />
+                <div class="form-group">
+                    <label>Название</label>
+                    <input asp-for="Name" type="text" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Описание</label>
+                    <input asp-for="Description" type="text" class="form-control" />
+                </div>
+                <button type="submit" class="btn btn-outline-success">Сохранить</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <form asp-action="UpdateStatus" method="post" class="">
+                <input hidden asp-for="Id" />
+                <div class="form-group">
+                    <label>Статус</label>
+                    <select asp-for="Status" asp-items="@Html.GetEnumSelectList<TaskStatus>()" class="form-control"></select>
+                </div>
+                <div class="form-group">
+                    <label>Назначено на...</label>
+                    <select asp-for="UserId" asp-items="@(new SelectList(Model.Users, nameof(UserViewModel.UserId), nameof(UserViewModel.Email)))" class="form-control"></select>
+                </div>
+                <button type="submit" class="btn btn-outline-success">Сохранить</button>
+            </form>
+        </div>
+    </div>
+</div>

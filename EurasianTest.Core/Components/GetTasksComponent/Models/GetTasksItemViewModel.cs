@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EurasianTest.Core.Components.DictionaryComponents.GetUsersDictionaryComponent.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -13,5 +14,7 @@ namespace EurasianTest.Core.Components.GetTasksComponent.Models
         public DateTime Expired { set; get; }
 
         public DateTime Started { set; get; }
+
+        public UserViewModel User { set; get; }
     }
 }

@@ -22,6 +22,7 @@ namespace EurasianTest.DAL.Configurations
 
             builder.HasOne(x => x.Project).WithMany(x => x.Tasks).HasForeignKey(x => x.ProjectId);
             builder.HasMany(x => x.History).WithOne(x => x.Task).HasForeignKey(x => x.TaskId);
+            builder.HasOne(x => x.User).WithMany(x => x.Tasks).HasForeignKey(x => x.UserId);
 
         }
     }

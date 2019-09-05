@@ -20,6 +20,7 @@
             <tr>
                 <th>#</th>
                 <th>Название</th>
+                <th>Ответственный</th>
                 <th>Дата начала</th>
                 <th>Дата завершения</th>
                 <th>Действия</th>
@@ -31,10 +32,11 @@
                 <tr>
                     <td>@(i + 1)</td>
                     <td>@Model.Items[i].Name</td>
+                    <td>@Model.Items[i].User?.Email</td>
                     <td>@Model.Items[i].Started</td>
                     <td>@Model.Items[i].Expired</td>
                     <td>
-                        <a hre asp-action="Details" asp-controller="Projects" asp-route-id="@Model.Items[i].Id">Детали</a>
+                        <a hre asp-action="Details" asp-controller="Tasks" asp-route-id="@Model.Items[i].Id">Детали</a>
                     </td>
                 </tr>
             }

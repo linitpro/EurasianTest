@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace EurasianTest.Core.Models
+namespace EurasianTest.Core.Components.DictionaryComponents.GetUsersDictionaryComponent.Models
 {
     public class UserViewModel
     {
