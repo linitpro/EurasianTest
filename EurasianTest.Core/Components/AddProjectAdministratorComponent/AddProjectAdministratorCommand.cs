@@ -1,6 +1,8 @@
 ﻿using EurasianTest.Core.Components.AddProjectAdministratorComponent.Models;
 using EurasianTest.Core.Infrastructure;
 using EurasianTest.DAL;
+using EurasianTest.DAL.Entities.Implementations;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,9 +21,37 @@ namespace EurasianTest.Core.Components.AddProjectAdministratorComponent
             this.dataContext = dataContext;
         }
 
-        public Task<Int64> ExecuteAsync(AddProjectAdministratorViewModel request)
+        public async Task<Int64> ExecuteAsync(AddProjectAdministratorViewModel request)
         {
-            throw new NotImplementedException();
+            // проверим, существует ли такой администратор
+            var projectAdmin = await this.dataContext
+                .ProjectAdministrators
+                .FirstOrDefaultAsync(x => x.ProjectId == request.Id && x.UserId == request.UserId);
+
+            // добавим нового
+            if (projectAdmin == null)
+            {
+                projectAdmin = new ProjectAdministrator(request.UserId, request.Id);
+                await this.dataContext.AddAsync(projectAdmin);
+                await this.dataContext.SaveChangesAsync();
+            }
+            else
+            {
+                // если существует и удален - оживим
+                if(projectAdmin.IsDeleted)
+                {
+                    projectAdmin.IsDeleted = false;
+                    this.dataContext.Update(projectAdmin);
+                    await this.dataContext.SaveChangesAsync();
+                } // если существует и не удален - вернем
+                else
+                {
+                    return projectAdmin.Id;
+                }
+
+            }
+
+            return projectAdmin.Id;
         }
     }
 }

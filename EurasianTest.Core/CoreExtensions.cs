@@ -1,8 +1,10 @@
-﻿using EurasianTest.Core.Components.AddProjectComponent;
+﻿using EurasianTest.Core.Components.AddProjectAdministratorComponent;
+using EurasianTest.Core.Components.AddProjectComponent;
 using EurasianTest.Core.Components.AddTaskComponent;
 using EurasianTest.Core.Components.AuthorizationComponent;
 using EurasianTest.Core.Components.ChangeTaskStatusComponent;
 using EurasianTest.Core.Components.ChangeUserRoleComponent;
+using EurasianTest.Core.Components.DeleteProjectComponent;
 using EurasianTest.Core.Components.DeleteTaskComponent;
 using EurasianTest.Core.Components.DictionaryComponents.GetProjectsDictionaryComponent;
 using EurasianTest.Core.Components.DictionaryComponents.GetUsersDictionaryComponent;
@@ -54,6 +56,8 @@ namespace EurasianTest.Core
             services.AddTransient<GetUserDetailsCommand>();
             services.AddTransient<ChangeUserRoleCommand>();
             services.AddTransient<DeleteTaskCommand>();
+            services.AddTransient<DeleteProjectCommand>();
+            services.AddTransient<AddProjectAdministratorCommand>();
 
             services.AddScoped<IAuthContext, AuthContext>();
 

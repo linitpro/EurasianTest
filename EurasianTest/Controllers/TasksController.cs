@@ -6,6 +6,8 @@ using EurasianTest.Core.Components.AddTaskComponent;
 using EurasianTest.Core.Components.AddTaskComponent.Models;
 using EurasianTest.Core.Components.ChangeTaskStatusComponent;
 using EurasianTest.Core.Components.ChangeTaskStatusComponent.Models;
+using EurasianTest.Core.Components.DeleteTaskComponent;
+using EurasianTest.Core.Components.DeleteTaskComponent.Models;
 using EurasianTest.Core.Components.DictionaryComponents.GetProjectsDictionaryComponent;
 using EurasianTest.Core.Components.DictionaryComponents.GetProjectsDictionaryComponent.Models;
 using EurasianTest.Core.Components.DictionaryComponents.GetUsersDictionaryComponent;
@@ -114,6 +116,14 @@ namespace EurasianTest.Controllers
             var command = this.unitOfWork.Create<GetTaskDetailsCommand>();
             var result = await command.ExecuteAsync(id);
             return View(result);
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Delete([FromForm]Int64 id)
+        {
+            var command = this.unitOfWork.Create<DeleteTaskCommand>();
+            var result = await command.ExecuteAsync(new DeleteTaskViewModel() { Id = id });
+            return Redirect("/Tasks/Index");
         }
     }
 }

@@ -40,7 +40,9 @@ namespace EurasianTest.Core.Components.GetHomeInfoModel
             var admInfoTask = strategy.Query.ExecuteAsync();
             var currentTask = this.dataContext
                 .Tasks
-                .Where(x => x.UserId == this.authContext.CurrentUser.Id && x.Status == DAL.Entities.Enums.TaskStatus.Working)
+                .Where(x => x.UserId == this.authContext.CurrentUser.Id 
+                            && x.Status == DAL.Entities.Enums.TaskStatus.Working
+                            && x.IsDeleted == false)
                 .ProjectTo<TaskViewModel>(this.mapper.ConfigurationProvider)
                 .ToListAsync();
             var nextWeekTask = this.dataContext
@@ -48,7 +50,8 @@ namespace EurasianTest.Core.Components.GetHomeInfoModel
                 .FromSql($@"
                     SELECT ""Id"", ""Name"" FROM public.""Tasks"" 
                     WHERE EXTRACT(WEEK FROM ""Started"") = EXTRACT(WEEK FROM (NOW() + INTERVAL '7 day'))
-                        AND ""UserId"" = {this.authContext.CurrentUser.Id};
+                        AND ""UserId"" = {this.authContext.CurrentUser.Id}
+                        AND ""IsDeleted"" = false;
                 ")
                 .ToListAsync();
 

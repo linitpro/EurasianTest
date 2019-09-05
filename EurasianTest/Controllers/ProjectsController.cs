@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EurasianTest.Core.Components.AddProjectAdministratorComponent;
+using EurasianTest.Core.Components.AddProjectAdministratorComponent.Models;
 using EurasianTest.Core.Components.AddProjectComponent;
 using EurasianTest.Core.Components.AddProjectComponent.Model;
+using EurasianTest.Core.Components.DeleteProjectComponent;
+using EurasianTest.Core.Components.DeleteProjectComponent.Models;
 using EurasianTest.Core.Components.GetProjectDetailsComponent;
 using EurasianTest.Core.Components.GetProjectsComponent;
 using EurasianTest.Core.Components.UpdateProjectComponent;
@@ -78,14 +82,21 @@ namespace EurasianTest.Controllers
         }
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> DeleteProjectAdministrator()
+        public async Task<IActionResult> Delete([FromForm]DeleteProjectViewModel model)
         {
-            return Redirect("/Projects/Details/{id}");
+            var command = this.unitOfWork.Create<DeleteProjectCommand>();
+            await command.ExecuteAsync(model);
+
+            return Redirect("/Projects/Index");
         }
 
-        public async Task<IActionResult> AddProjectAdministrator()
+        [HttpPost("[action]")]
+        public async Task<IActionResult> AddProjectAdministrator([FromForm]AddProjectAdministratorViewModel model)
         {
-            return Redirect("/Projects/Details/{id}");
+            var command = this.unitOfWork.Create<AddProjectAdministratorCommand>();
+            await command.ExecuteAsync(model);
+
+            return Redirect($"/Projects/Details/{model.Id}");
         }
     }
 }
