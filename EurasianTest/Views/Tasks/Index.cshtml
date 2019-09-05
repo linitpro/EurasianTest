@@ -33,8 +33,8 @@
                     <td>@(i + 1)</td>
                     <td>@Model.Items[i].Name</td>
                     <td>@Model.Items[i].User?.Email</td>
-                    <td>@Model.Items[i].Started</td>
-                    <td>@Model.Items[i].Expired</td>
+                    <td>@Model.Items[i].Started.ToShortDateString()</td>
+                    <td>@Model.Items[i].Expired.ToShortDateString()</td>
                     <td>
                         <a hre asp-action="Details" asp-controller="Tasks" asp-route-id="@Model.Items[i].Id">Детали</a>
                     </td>

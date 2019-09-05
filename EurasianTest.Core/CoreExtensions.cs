@@ -2,6 +2,8 @@
 using EurasianTest.Core.Components.AddTaskComponent;
 using EurasianTest.Core.Components.AuthorizationComponent;
 using EurasianTest.Core.Components.ChangeTaskStatusComponent;
+using EurasianTest.Core.Components.ChangeUserRoleComponent;
+using EurasianTest.Core.Components.DeleteTaskComponent;
 using EurasianTest.Core.Components.DictionaryComponents.GetProjectsDictionaryComponent;
 using EurasianTest.Core.Components.DictionaryComponents.GetUsersDictionaryComponent;
 using EurasianTest.Core.Components.GetHomeInfoModel;
@@ -9,6 +11,7 @@ using EurasianTest.Core.Components.GetProjectDetailsComponent;
 using EurasianTest.Core.Components.GetProjectsComponent;
 using EurasianTest.Core.Components.GetTaskDetailsComponent;
 using EurasianTest.Core.Components.GetTasksComponent;
+using EurasianTest.Core.Components.GetUserDetailsComponent;
 using EurasianTest.Core.Components.GetUsersComponent;
 using EurasianTest.Core.Components.OuterRegistrationComponent;
 using EurasianTest.Core.Components.UpdateProjectComponent;
@@ -48,6 +51,9 @@ namespace EurasianTest.Core
             services.AddTransient<ChangeTaskStatusCommand>();
             services.AddTransient<UpdateTaskCommand>();
             services.AddTransient<GetHomeInfoCommand>();
+            services.AddTransient<GetUserDetailsCommand>();
+            services.AddTransient<ChangeUserRoleCommand>();
+            services.AddTransient<DeleteTaskCommand>();
 
             services.AddScoped<IAuthContext, AuthContext>();
 

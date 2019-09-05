@@ -43,3 +43,14 @@
         </div>
     </div>
 </div>
+
+<div class="card-group">
+    <div class="card">
+        <div class="card-body">
+            <form asp-controller="Tasks" asp-action="Delete" method="post">
+                <input hidden asp-for="Id" />
+                <button class="btn btn-danger" type="submit">Удалить</button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -4,7 +4,7 @@
 }
 @model EurasianTest.Core.Components.GetProjectDetailsComponent.Models.GetProjectDetailsViewModel
 
-<h1>Project details</h1>
+<h1>Проект: @Model.Name</h1>
 
 <div class="container">
     <form asp-controller="Projects" asp-action="Update" method="post">
