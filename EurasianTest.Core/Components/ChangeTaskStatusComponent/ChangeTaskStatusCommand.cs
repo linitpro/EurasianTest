@@ -59,7 +59,7 @@ namespace EurasianTest.Core.Components.ChangeTaskStatusComponent
                 }
                 catch (Exception ex)
                 {
-                    // TODO логируем ошибку
+                    // TODO log error
                     transaction.Rollback();
                     throw new CoreException(ResultCode.GenericError);
                 }
