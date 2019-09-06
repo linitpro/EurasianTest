@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using EurasianTest.Core.Components.ChangeUserRoleComponent;
 using EurasianTest.Core.Components.ChangeUserRoleComponent.Models;
 using EurasianTest.Core.Components.GetUserDetailsComponent;
 using EurasianTest.Core.Components.GetUsersComponent;
-using EurasianTest.Core.Components.OuterRegistrationComponent;
-using EurasianTest.Core.Components.OuterRegistrationComponent.Models;
 using EurasianTest.Core.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +20,7 @@ namespace EurasianTest.Controllers
         {
             this.unitOfWork = unitOfWork;
         }
-
+        
         public async Task<IActionResult> Index()
         {
             var command = this.unitOfWork.Create<GetUsersCommand>();
