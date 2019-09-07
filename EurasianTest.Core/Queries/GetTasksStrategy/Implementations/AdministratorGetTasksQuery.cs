@@ -34,14 +34,30 @@ namespace EurasianTest.Core.Queries.GetTasksStrategy.Implementations
             this.mapper = mapper ?? throw new NotImplementedException(nameof(IMapper));
         }
 
-        public async Task<List<GetTasksItemViewModel>> ExecuteAsync()
+        public async Task<List<GetTasksItemViewModel>> ExecuteAsync(GetTasksViewModel request)
         {
-            return await dataContext
+            var query = dataContext
                 .Tasks
-                .Where(x => x.IsDeleted == false)
-                .ProjectTo<GetTasksItemViewModel>(this.mapper.ConfigurationProvider)
-                .OrderBy(x => x.Name)
-                .ToListAsync();
+                .Where(x => x.IsDeleted == false);
+
+            if(request.ProjectIdFilter != null)
+            {
+                query = query.Where(x => x.ProjectId == request.ProjectIdFilter.Value);
+            }
+
+            if(request.TaskStatusFilter != null)
+            {
+                query = query.Where(x => x.Status == request.TaskStatusFilter.Value);
+            }
+
+            if(request.UserIdFilter != null)
+            {
+                query = query.Where(x => x.UserId == request.UserIdFilter.Value);
+            }
+
+            return await query.ProjectTo<GetTasksItemViewModel>(this.mapper.ConfigurationProvider)
+                            .OrderBy(x => x.Name)
+                            .ToListAsync();
         }
     }
 }

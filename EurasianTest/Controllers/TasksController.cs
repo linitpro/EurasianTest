@@ -8,8 +8,6 @@ using EurasianTest.Core.Components.ChangeTaskStatusComponent;
 using EurasianTest.Core.Components.ChangeTaskStatusComponent.Models;
 using EurasianTest.Core.Components.DeleteTaskComponent;
 using EurasianTest.Core.Components.DeleteTaskComponent.Models;
-using EurasianTest.Core.Components.DictionaryComponents.GetProjectsDictionaryComponent;
-using EurasianTest.Core.Components.DictionaryComponents.GetProjectsDictionaryComponent.Models;
 using EurasianTest.Core.Components.DictionaryComponents.GetUsersDictionaryComponent;
 using EurasianTest.Core.Components.DictionaryComponents.GetUsersDictionaryComponent.Models;
 using EurasianTest.Core.Components.GetProjectDetailsComponent;

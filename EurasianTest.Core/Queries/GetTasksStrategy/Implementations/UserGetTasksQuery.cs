@@ -38,14 +38,30 @@ namespace EurasianTest.Core.Queries.GetTasksStrategy.Implementations
             this.authContext = authContext ?? throw new NotImplementedException(nameof(IAuthContext));
         }
 
-        public async Task<List<GetTasksItemViewModel>> ExecuteAsync()
+        public async Task<List<GetTasksItemViewModel>> ExecuteAsync(GetTasksViewModel request)
         {
             Int64 userId = this.authContext.CurrentUser.Id;
 
-            return await dataContext
+            var query = dataContext
                 .Tasks
-                .Where(x => x.IsDeleted == false && x.Project.ProjectAdministrators.Any(a => a.UserId == userId && a.IsDeleted == false))
-                .ProjectTo<GetTasksItemViewModel>(this.mapper.ConfigurationProvider)
+                .Where(x => x.IsDeleted == false && x.Project.ProjectAdministrators.Any(a => a.UserId == userId && a.IsDeleted == false));
+
+            if (request.ProjectIdFilter != null)
+            {
+                query = query.Where(x => x.ProjectId == request.ProjectIdFilter.Value);
+            }
+
+            if (request.TaskStatusFilter != null)
+            {
+                query = query.Where(x => x.Status == request.TaskStatusFilter.Value);
+            }
+
+            if (request.UserIdFilter != null)
+            {
+                query = query.Where(x => x.UserId == request.UserIdFilter.Value);
+            }
+
+            return await query.ProjectTo<GetTasksItemViewModel>(this.mapper.ConfigurationProvider)
                 .OrderBy(x => x.Name)
                 .ToListAsync();
         }

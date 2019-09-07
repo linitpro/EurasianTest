@@ -1,4 +1,6 @@
 ﻿@using EurasianTest.Core.Components.GetProjectsComponent.Models
+@using EurasianTest.Core.Components.DictionaryComponents.GetUsersDictionaryComponent.Models;
+@using _TaskStatus = EurasianTest.DAL.Entities.Enums.TaskStatus
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,18 +8,52 @@
 @inject EurasianTest.Core.Infrastructure.IAuthContext auth
 @model EurasianTest.Core.Components.GetTasksComponent.Models.GetTasksViewModel
 <h1>Задачи</h1>
-
+<hr />
 <div class="container">
-    <div class="row">
-        @if (auth.CurrentUser.Role != EurasianTest.DAL.Entities.Enums.Role.User)
-        {
-            <form action="/Tasks/Add" method="get">
-                <label>К проекту</label>
-                <select class="form-control" name="projectId" asp-items="@(new SelectList(Model.Projects, nameof(GetProjectsItemViewModel.Id), nameof(GetProjectsItemViewModel.Name)))"></select>
-                <button type="submit" class="btn btn-outline-success">Добавить задачу</button>
-            </form>
-        }
-    </div>
+    @if (auth.CurrentUser.Role != EurasianTest.DAL.Entities.Enums.Role.User)
+    {
+        <form action="/Tasks/Add" method="get">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label>К проекту</label>
+                    <select class="form-control" name="projectId" asp-items="@(new SelectList(Model.Projects, nameof(GetProjectsItemViewModel.Id), nameof(GetProjectsItemViewModel.Name)))"></select>
+                </div>
+                <div class="form-group col-md-3">
+                    <label>&nbsp;</label>
+                    <button type="submit" class="btn btn-outline-success form-control">Добавить задачу</button>
+                </div>
+            </div>
+        </form>
+    }
+</div>
+<hr />
+<div class="container">
+    <form>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="inputCity">Проект</label>
+                <select name="ProjectIdFilter" asp-for="ProjectIdFilter" asp-items="@(new SelectList(Model.Projects, nameof(GetProjectsItemViewModel.Id), nameof(GetProjectsItemViewModel.Name)))" class="form-control">
+                    <option value=""></option>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="inputState">Пользователь</label>
+                <select name="UserIdFilter" asp-for="UserIdFilter" asp-items="@(new SelectList(Model.Users, nameof(UserViewModel.UserId), nameof(UserViewModel.Email)))" class="form-control">
+                    <option value=""></option>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="inputZip">Статус</label>
+                <select name="TaskStatusFilter" asp-for="TaskStatusFilter" asp-items="@Html.GetEnumSelectList<_TaskStatus>()" class="form-control">
+                    <option value=""></option>
+                </select>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="SubminButton">&nbsp;</label>
+                <button type="submit" class="btn btn-outline-primary form-control">Найти</button>
+            </div>
+        </div>
+    </form>
 </div>
 <hr />
 <div class="container">
