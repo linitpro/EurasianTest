@@ -12,12 +12,14 @@ using EurasianTest.Core.Components.DictionaryComponents.GetProjectsDictionaryCom
 using EurasianTest.Core.Components.DictionaryComponents.GetProjectsDictionaryComponent.Models;
 using EurasianTest.Core.Components.DictionaryComponents.GetUsersDictionaryComponent;
 using EurasianTest.Core.Components.DictionaryComponents.GetUsersDictionaryComponent.Models;
+using EurasianTest.Core.Components.GetProjectDetailsComponent;
 using EurasianTest.Core.Components.GetTaskDetailsComponent;
 using EurasianTest.Core.Components.GetTasksComponent;
 using EurasianTest.Core.Components.GetTasksComponent.Models;
 using EurasianTest.Core.Components.UpdateTaskComponent;
 using EurasianTest.Core.Components.UpdateTaskComponent.Models;
 using EurasianTest.Core.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EurasianTest.Controllers
@@ -33,7 +35,7 @@ namespace EurasianTest.Controllers
         }
 
         /// <summary>
-        /// Отображает всписок задач пользователя
+        /// Отображает список задач пользователя
         /// </summary>
         /// <returns></returns>
         [HttpGet("[action]")]
@@ -45,22 +47,24 @@ namespace EurasianTest.Controllers
             {
                 model = new GetTasksViewModel();
             }
+            model = await command.ExecuteAsync(model);
 
-            return View(await command.ExecuteAsync(model));
+            return View(model);
         }
 
         /// <summary>
-        /// Показывает страницу добавления новой задачи
+        /// Показывает страницу добавления новой задачи к проекту
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = "Administrator,ProjectAdministrator")]
         [HttpGet("[action]")]
-        public async Task<IActionResult> Add() // TODO перегрузить для возможности добавить к пользователю или проекту
+        public async Task<IActionResult> Add([FromQuery]Int64 projectId)
         {
             var model = new AddTaskViewModel();
-            var userCommandResult = this.unitOfWork.Create<GetUsersDictionaryCommand>().ExecuteAsync(new GetUsersDictionaryRequestViewModel());
-            var projectCommandResult = this.unitOfWork.Create<GetProjectsDictionaryCommand>().ExecuteAsync(new GetProjectsDictionaryRequestViewModel());
+            var userCommandResult = this.unitOfWork.Create<GetUsersDictionaryCommand>().ExecuteAsync(new GetUsersDictionaryRequestViewModel() { ProjectId = projectId });
+            var projectCommandResult = this.unitOfWork.Create<GetProjectDetailsCommand>().ExecuteAsync(projectId);
             Task.WaitAll(userCommandResult, projectCommandResult);
-            model.Projects = projectCommandResult.Result;
+            model.ProjectName = projectCommandResult.Result.Name;
             model.Users = userCommandResult.Result;
 
             return View(model);
@@ -71,6 +75,7 @@ namespace EurasianTest.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
+        [Authorize(Roles = "Administrator,ProjectAdministrator")]
         [HttpPost("[action]")]
         public async Task<IActionResult> Add([FromForm]AddTaskViewModel model)
         {
@@ -84,6 +89,7 @@ namespace EurasianTest.Controllers
         /// Редактирование задачи
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = "Administrator,ProjectAdministrator")]
         [HttpPost("[action]")]
         public async Task<IActionResult> Update([FromForm]UpdateTaskViewModel model)
         {
@@ -97,6 +103,7 @@ namespace EurasianTest.Controllers
         /// Редактирование статуса и ответственного задачи
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = "Administrator,ProjectAdministrator")]
         [HttpPost("[action]")]
         public async Task<IActionResult> UpdateStatus([FromForm]ChangeTaskStatusViewModel model)
         {
@@ -118,6 +125,12 @@ namespace EurasianTest.Controllers
             return View(result);
         }
 
+        /// <summary>
+        /// Удаляет задачу
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Authorize(Roles = "Administrator,ProjectAdministrator")]
         [HttpPost("[action]")]
         public async Task<IActionResult> Delete([FromForm]Int64 id)
         {

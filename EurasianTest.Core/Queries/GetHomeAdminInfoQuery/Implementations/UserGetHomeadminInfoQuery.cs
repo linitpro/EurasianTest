@@ -16,11 +16,11 @@ namespace EurasianTest.Core.Queries.GetHomeAdminInfoQuery.Implementations
         {
             get
             {
-                return Role.Administrator;
+                return Role.User;
             }
         }
 
-        public Task<GetHomeAdminInfoViewModel> ExecuteAsync()
+        public async Task<GetHomeAdminInfoViewModel> ExecuteAsync()
         {
             // у пользователя не должно быть такой информации
             return null;

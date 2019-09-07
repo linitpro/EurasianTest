@@ -4,6 +4,7 @@ using EurasianTest.Core.Infrastructure;
 using EurasianTest.DAL.Entities.Enums;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace EurasianTest.Controllers
 {
-    public class AuthorizationController: Controller
+    public class AuthorizationController : Controller
     {
         private readonly UnitOfWork unitOfWork;
 
@@ -55,6 +56,14 @@ namespace EurasianTest.Controllers
                 });
 
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return Redirect("/Authorization/Index");
         }
     }
 }

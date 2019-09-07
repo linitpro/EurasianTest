@@ -25,6 +25,8 @@ using EurasianTest.Core.Queries.GetProjectDetailsStrategy;
 using EurasianTest.Core.Queries.GetProjectDetailsStrategy.Implementations;
 using EurasianTest.Core.Queries.GetProjectsStrategy;
 using EurasianTest.Core.Queries.GetProjectsStrategy.Implementations;
+using EurasianTest.Core.Queries.GetTasksStrategy;
+using EurasianTest.Core.Queries.GetTasksStrategy.Implementations;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -75,6 +77,11 @@ namespace EurasianTest.Core
             services.AddTransient<IGetHomeadminInfoQuery, AdministratorGetHomeadminInfoQuery>();
             services.AddTransient<IGetHomeadminInfoQuery, ProjectAdministratorGetHomeadminInfoQuery>();
             services.AddTransient<IGetHomeadminInfoQuery, UserGetHomeadminInfoQuery>();
+
+            services.AddTransient<GetTasksStrategy>();
+            services.AddTransient<IGetTasksQuery, UserGetTasksQuery>();
+            services.AddTransient<IGetTasksQuery, ProjectAdministratorGetTasksQuery>();
+            services.AddTransient<IGetTasksQuery, AdministratorGetTasksQuery>();
 
             return services;
         }

@@ -33,6 +33,8 @@ namespace EurasianTest.Core.Components.UpdateTaskComponent
 
             task.Name = request.Name;
             task.Description = request.Description;
+            task.Started = request.Started;
+            task.Expired = request.Expired;
 
             this.dataContext.Tasks.Update(task);
             await this.dataContext.SaveChangesAsync();

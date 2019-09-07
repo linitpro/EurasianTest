@@ -23,6 +23,12 @@ namespace EurasianTest.DAL.Configurations
             builder.HasOne(x => x.User).WithMany(x => x.History).HasForeignKey(x => x.UserId);
             builder.HasOne(x => x.OldUser).WithMany(x => x.SendedHistory).HasForeignKey(x => x.OldUserId);
             builder.HasOne(x => x.NewUser).WithMany(x => x.RecievedHistory).HasForeignKey(x => x.NewUserId);
+
+            builder.HasIndex(x => x.UserId);
+            builder.HasIndex(x => x.OldUserId);
+            builder.HasIndex(x => x.NewUserId);
+            builder.HasIndex(x => x.TaskId);
+
         }
     }
 }

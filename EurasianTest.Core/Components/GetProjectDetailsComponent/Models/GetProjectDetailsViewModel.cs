@@ -22,6 +22,11 @@ namespace EurasianTest.Core.Components.GetProjectDetailsComponent.Models
         /// <summary>
         /// Администраторы проекта
         /// </summary>
+        public List<GetProjectDetailsUserViewModel> AddedUsers { set; get; }
+
+        /// <summary>
+        /// Администраторы проекта, которых возможно добавить
+        /// </summary>
         public List<GetProjectDetailsUserViewModel> Users { set; get; }
     }
 }

@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using EurasianTest.Core.Components.GetProjectsComponent.Models;
+using EurasianTest.Core.Components.GetTasksComponent.Models;
 using EurasianTest.Core.Infrastructure;
 using EurasianTest.DAL;
 using EurasianTest.DAL.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
 
-namespace EurasianTest.Core.Queries.GetProjectsStrategy.Implementations
+namespace EurasianTest.Core.Queries.GetTasksStrategy.Implementations
 {
-    public class UserGetProjectsQuery : IGetProjectsQuery
+    public class UserGetTasksQuery : IGetTasksQuery
     {
         public Role Role
         {
@@ -27,7 +28,7 @@ namespace EurasianTest.Core.Queries.GetProjectsStrategy.Implementations
         private readonly IMapper mapper;
         private readonly IAuthContext authContext;
 
-        public UserGetProjectsQuery(DataContext dataContext
+        public UserGetTasksQuery(DataContext dataContext
             , IMapper mapper
             , IAuthContext authContext
             )
@@ -37,14 +38,15 @@ namespace EurasianTest.Core.Queries.GetProjectsStrategy.Implementations
             this.authContext = authContext ?? throw new NotImplementedException(nameof(IAuthContext));
         }
 
-        public async Task<List<GetProjectsItemViewModel>> ExecuteAsync()
+        public async Task<List<GetTasksItemViewModel>> ExecuteAsync()
         {
             Int64 userId = this.authContext.CurrentUser.Id;
 
             return await dataContext
-                .Projects
-                .Where(x => x.IsDeleted == false && x.ProjectAdministrators.Any(a => a.UserId == userId && a.IsDeleted == false))
-                .ProjectTo<GetProjectsItemViewModel>(this.mapper.ConfigurationProvider)
+                .Tasks
+                .Where(x => x.IsDeleted == false && x.Project.ProjectAdministrators.Any(a => a.UserId == userId && a.IsDeleted == false))
+                .ProjectTo<GetTasksItemViewModel>(this.mapper.ConfigurationProvider)
+                .OrderBy(x => x.Name)
                 .ToListAsync();
         }
     }

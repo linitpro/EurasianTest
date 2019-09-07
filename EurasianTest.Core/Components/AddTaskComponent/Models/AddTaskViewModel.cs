@@ -8,12 +8,11 @@ namespace EurasianTest.Core.Components.AddTaskComponent.Models
 {
     public class AddTaskViewModel
     {
-        public AddTaskViewModel(): this(new List<UserViewModel>(), new List<ProjectViewModel>()) {}
+        public AddTaskViewModel(): this(new List<UserViewModel>()) {}
 
-        public AddTaskViewModel(List<UserViewModel> users, List<ProjectViewModel> projects)
+        public AddTaskViewModel(List<UserViewModel> users)
         {
             this.Users = users;
-            this.Projects = projects;
         }
 
         /// <summary>
@@ -32,9 +31,9 @@ namespace EurasianTest.Core.Components.AddTaskComponent.Models
         public Int64 ProjectId { set; get; }
 
         /// <summary>
-        /// Проекты
+        /// Проект
         /// </summary>
-        public List<ProjectViewModel> Projects { set; get; }
+        public String ProjectName { set; get; }
 
         /// <summary>
         /// Пользователь, для которого назначается задача

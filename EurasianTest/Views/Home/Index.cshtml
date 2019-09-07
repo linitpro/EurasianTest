@@ -3,8 +3,8 @@
 }
 @model EurasianTest.Core.Components.GetHomeInfoModel.Model.GetHomeInfoViewModel
 @inject EurasianTest.Core.Infrastructure.IAuthContext authContext
-<!-- TODO Здесь добавить для администратова -->
-@if (authContext.CurrentUser.Role != EurasianTest.DAL.Entities.Enums.Role.User)
+
+@if (authContext.CurrentUser.Role == EurasianTest.DAL.Entities.Enums.Role.Administrator)
 {
     <div class="container">
         <div class="card-deck mb-3 text-center">
@@ -31,9 +31,6 @@
         </div>
     </div>
 }
-
-<!-- 1. В работе у пользователя -->
-<!-- 2. Нужно начать делать на след.неделе -->
 <div class="container">
     <div class="card-deck mb-3 text-center">
         <div class="card mb-4 shadow-sm">
@@ -41,11 +38,24 @@
                 <h4>
                     В работе у пользователя
                 </h4>
-                @for (int i = 0; i < Model.TaskForWork.Count; i++)
+                @if (Model.TaskForWork?.Count > 0)
                 {
-                    <p>
-                        <a href="/Tasks/Details/@Model.TaskForWork[i].Id">@Model.TaskForWork[i].Name</a>
-                    </p>
+                    <table class="table table-borderless">
+                        <tbody>
+                            @for (int i = 0; i < Model.TaskForWork.Count; i++)
+                            {
+                                <tr>
+                                    <td>
+                                        <a href="/Tasks/Details/@Model.TaskForWork[i].Id">@Model.TaskForWork[i].Name</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p>нет данных</p>
                 }
             </div>
         </div>
@@ -54,11 +64,24 @@
                 <h4>
                     На следующей неделе
                 </h4>
-                @for (int i = 0; i < Model.TasksStartOnNextWeek.Count; i++)
+                @if (Model.TasksStartOnNextWeek?.Count > 0)
                 {
-                    <p>
-                        <a href="/Tasks/Details/@Model.TasksStartOnNextWeek[i].Id">@Model.TasksStartOnNextWeek[i].Name</a>
-                    </p>
+                    <table>
+                        <tbody>
+                            @for (int i = 0; i < Model.TasksStartOnNextWeek.Count; i++)
+                            {
+                                <tr>
+                                    <td>
+                                        <a href="/Tasks/Details/@Model.TasksStartOnNextWeek[i].Id">@Model.TasksStartOnNextWeek[i].Name</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p>нет данных</p>
                 }
             </div>
         </div>

@@ -42,5 +42,9 @@ namespace EurasianTest.Core.Components.GetTaskDetailsComponent.Models
         public UserViewModel User { set; get; }
 
         public Int64 UserId { set; get; }
+
+        public DateTime Started { set; get; }
+
+        public DateTime Expired { set; get; }
     }
 }

@@ -16,5 +16,7 @@ namespace EurasianTest.Core.Components.DictionaryComponents.GetUsersDictionaryCo
         }
 
         public List<Role> Roles { set; get; }
+
+        public Int64? ProjectId { set; get; }
     }
 }

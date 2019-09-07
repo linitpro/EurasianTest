@@ -16,6 +16,7 @@ namespace EurasianTest.Core.Components.GetProjectDetailsComponent.Models
 
             CreateMap<User, GetProjectDetailsUserViewModel>()
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
+                .ForMember(dest => dest.IsProjectAdministrator, opt => opt.MapFrom(src => src.Role == DAL.Entities.Enums.Role.ProjectAdministrator))
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
         }
     }

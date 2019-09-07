@@ -1,10 +1,10 @@
 ﻿using EurasianTest.Core.Components.GetHomeInfoModel.Model;
 using EurasianTest.DAL;
 using EurasianTest.DAL.Entities.Enums;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace EurasianTest.Core.Queries.GetHomeAdminInfoQuery.Implementations
 {
@@ -23,17 +23,13 @@ namespace EurasianTest.Core.Queries.GetHomeAdminInfoQuery.Implementations
         {
             get
             {
-                return Role.Administrator;
+                return Role.ProjectAdministrator;
             }
         }
 
-        public async Task<GetHomeAdminInfoViewModel> ExecuteAsync()
+        public async System.Threading.Tasks.Task<GetHomeAdminInfoViewModel> ExecuteAsync()
         {
-            GetHomeAdminInfoViewModel result = null;
-
-            // тот же запрос, что и у даминистратора, но ограничить совими проектами
-
-            return result;
+            return null;
         }
     }
 }

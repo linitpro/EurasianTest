@@ -27,11 +27,17 @@ namespace EurasianTest.Core.Components.DictionaryComponents.GetUsersDictionaryCo
 
         public async Task<List<UserViewModel>> ExecuteAsync(GetUsersDictionaryRequestViewModel request)
         {
-            return await this.dataContext
+            var query = this.dataContext
                 .Users
-                .Where(x => x.IsDeleted == false && request.Roles.Any(a => a == x.Role))
-                .ProjectTo<UserViewModel>(this.mapper.ConfigurationProvider)
-                .ToListAsync();
+                .Where(x => x.IsDeleted == false && request.Roles.Any(a => a == x.Role));
+
+            if(request.ProjectId != null)
+            {
+                query = query.Where(x => x.Projects.Any(a => a.IsDeleted == false && a.ProjectId == request.ProjectId));
+            }
+
+            return await query.ProjectTo<UserViewModel>(this.mapper.ConfigurationProvider)
+                              .ToListAsync();
         }
     }
 }

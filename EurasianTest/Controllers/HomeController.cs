@@ -21,6 +21,7 @@ namespace EurasianTest.Controllers
             this.unitOfWork = unitOfWork;
         }
 
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var command = this.unitOfWork.Create<GetHomeInfoCommand>();
@@ -28,15 +29,5 @@ namespace EurasianTest.Controllers
             return View(await command.ExecuteAsync());
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }

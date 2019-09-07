@@ -41,9 +41,20 @@ namespace EurasianTest.Core.Queries.GetProjectDetailsStrategy.Implementations
                 .ProjectTo<GetProjectDetailsViewModel>(this.mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync();
 
+            project.AddedUsers = await this.dataContext
+                .Users
+                .Include(x => x.Projects)
+                .Where(x => x.IsDeleted == false
+                            && x.Projects.Any(a => a.IsDeleted == false && a.ProjectId == id)
+                            && x.Role != Role.Administrator)
+                .ProjectTo<GetProjectDetailsUserViewModel>(this.mapper.ConfigurationProvider)
+                .ToListAsync();
+
             project.Users = await this.dataContext
                 .Users
-                .Where(x => x.IsDeleted == false && x.Projects.Any(a => a.IsDeleted == false && a.ProjectId == id))
+                .Where(x => x.IsDeleted == false
+                            && !x.Projects.Any(a => a.IsDeleted == false && a.ProjectId == id)
+                            && x.Role != Role.Administrator)
                 .ProjectTo<GetProjectDetailsUserViewModel>(this.mapper.ConfigurationProvider)
                 .ToListAsync();
 

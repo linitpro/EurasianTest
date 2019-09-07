@@ -19,9 +19,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace EurasianTest.Controllers
 {
     /// <summary>
-    /// 
+    /// Контроллер для работы с проектами
     /// </summary>
-    [Authorize] // TODO add role based auth
+    [Authorize]
     [Route("[controller]")]
     public class ProjectsController : Controller
     {
@@ -36,6 +36,7 @@ namespace EurasianTest.Controllers
         /// Выводит на экран список проектов в которых участвует пользователь 
         /// </summary>
         /// <returns></returns>
+        [Authorize]
         [HttpGet("[action]")]
         public async Task<IActionResult> Index()
         {
@@ -44,6 +45,7 @@ namespace EurasianTest.Controllers
             return View(await command.ExecuteAsync(new Core.Components.GetProjectsComponent.Models.GetProjectsViewModel()));
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpGet("[action]")]
         public async Task<IActionResult> Add()
         {
@@ -55,6 +57,7 @@ namespace EurasianTest.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
+        [Authorize(Roles = "Administrator")]
         [HttpPost("[action]")]
         public async Task<IActionResult> Add(AddProjectViewModel model)
         {
@@ -65,6 +68,12 @@ namespace EurasianTest.Controllers
             return RedirectToAction("Index", "Projects");
         }
 
+        /// <summary>
+        /// Показывает детали проекта
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Authorize(Roles = "Administrator")]
         [HttpGet("[action]/{id}")]
         public async Task<IActionResult> Details([FromRoute]Int64 id)
         {
@@ -73,6 +82,12 @@ namespace EurasianTest.Controllers
             return View(result);
         }
 
+        /// <summary>
+        /// Обновляет данные о проекте
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [Authorize(Roles = "Administrator")]
         [HttpPost("[action]")]
         public async Task<IActionResult> Update([FromForm]UpdateProjectViewModel model)
         {
@@ -81,6 +96,12 @@ namespace EurasianTest.Controllers
             return Redirect($"/Projects/Details/{model.Id}");
         }
 
+        /// <summary>
+        /// Удаляет проект
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [Authorize(Roles = "Administrator")]
         [HttpPost("[action]")]
         public async Task<IActionResult> Delete([FromForm]DeleteProjectViewModel model)
         {
@@ -90,6 +111,12 @@ namespace EurasianTest.Controllers
             return Redirect("/Projects/Index");
         }
 
+        /// <summary>
+        /// Добавляет администратора проекта
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [Authorize(Roles = "Administrator")]
         [HttpPost("[action]")]
         public async Task<IActionResult> AddProjectAdministrator([FromForm]AddProjectAdministratorViewModel model)
         {

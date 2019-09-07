@@ -6,9 +6,8 @@
 @using EurasianTest.Core.Components.DictionaryComponents.GetProjectsDictionaryComponent.Models
 @using EurasianTest.Core.Components.DictionaryComponents.GetUsersDictionaryComponent.Models
 @model EurasianTest.Core.Components.AddTaskComponent.Models.AddTaskViewModel
-<h1>Добавление новой задачи</h1>
 
-
+<h1>Добавление новой задачи к проекту @Model.ProjectName</h1>
 <form asp-controller="Tasks" asp-action="Add" method="post">
     <label>Название</label>
     <input asp-for="Name" type="text" class="form-control" />
@@ -21,10 +20,8 @@
     <label>Дата завершения</label>
     <input asp-for="Expired" type="text" class="form-control" />
 
-    <div class="form-group">
-        <label>Проект</label>
-        <select asp-for="ProjectId" asp-items="@(new SelectList(Model.Projects, nameof(ProjectViewModel.ProjectId), nameof(ProjectViewModel.Name)))" class="form-control"></select>
-    </div>
+    <input hidden asp-for="ProjectId" />
+
     <div class="form-group">
         <label>Назначить на</label>
         <select asp-for="UserId" asp-items="@(new SelectList(Model.Users, nameof(UserViewModel.UserId), nameof(UserViewModel.Email)))" class="form-control"></select>

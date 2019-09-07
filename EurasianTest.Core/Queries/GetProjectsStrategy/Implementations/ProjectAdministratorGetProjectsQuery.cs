@@ -43,8 +43,9 @@ namespace EurasianTest.Core.Queries.GetProjectsStrategy.Implementations
 
             return await dataContext
                 .Projects
-                .Where(x => x.IsDeleted == false && x.ProjectAdministrators.Any(a => a.UserId == userId))
+                .Where(x => x.IsDeleted == false && x.ProjectAdministrators.Any(a => a.UserId == userId && x.IsDeleted == false))
                 .ProjectTo<GetProjectsItemViewModel>(this.mapper.ConfigurationProvider)
+                .OrderBy(x => x.Name)
                 .ToListAsync();
         }
     }

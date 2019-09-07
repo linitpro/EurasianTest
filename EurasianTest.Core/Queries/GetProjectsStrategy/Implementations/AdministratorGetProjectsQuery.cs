@@ -39,6 +39,7 @@ namespace EurasianTest.Core.Queries.GetProjectsStrategy.Implementations
                 .Projects
                 .Where(x => x.IsDeleted == false)
                 .ProjectTo<GetProjectsItemViewModel>(this.mapper.ConfigurationProvider)
+                .OrderBy(x => x.Name)
                 .ToListAsync();
         }
     }

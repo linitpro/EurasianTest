@@ -16,5 +16,17 @@ namespace EurasianTest.Core.Components.GetProjectDetailsComponent.Models
         /// </summary>
         public String Email { set; get; }
 
+        /// <summary>
+        /// Флаг администратора проекта
+        /// </summary>
+        public Boolean IsProjectAdministrator { set; get; }
+
+        public String EmailWithRole
+        {
+            get
+            {
+                return $"{(this.IsProjectAdministrator ? "PM" : "user")} {this.Email}";
+            }
+        }
     }
 }

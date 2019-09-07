@@ -11,5 +11,9 @@ namespace EurasianTest.Core.Components.UpdateTaskComponent.Models
         public String Name { set; get; }
 
         public String Description { set; get; }
+
+        public DateTime Started { set; get; }
+
+        public DateTime Expired { set; get; }
     }
 }

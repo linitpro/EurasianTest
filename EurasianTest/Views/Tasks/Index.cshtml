@@ -1,16 +1,22 @@
-﻿
+﻿@using EurasianTest.Core.Components.GetProjectsComponent.Models
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@inject EurasianTest.Core.Infrastructure.IAuthContext auth
 @model EurasianTest.Core.Components.GetTasksComponent.Models.GetTasksViewModel
 <h1>Задачи</h1>
 
 <div class="container">
     <div class="row">
-        <div class="col-md2">
-            <a asp-action="Add" class="btn btn-outline-success">Добавить</a>
-        </div>
+        @if (auth.CurrentUser.Role != EurasianTest.DAL.Entities.Enums.Role.User)
+        {
+            <form action="/Tasks/Add" method="get">
+                <label>К проекту</label>
+                <select class="form-control" name="projectId" asp-items="@(new SelectList(Model.Projects, nameof(GetProjectsItemViewModel.Id), nameof(GetProjectsItemViewModel.Name)))"></select>
+                <button type="submit" class="btn btn-outline-success">Добавить задачу</button>
+            </form>
+        }
     </div>
 </div>
 <hr />

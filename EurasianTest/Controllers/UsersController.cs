@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EurasianTest.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrator")]
     [Route("[controller]")]
     public class UsersController : Controller
     {
