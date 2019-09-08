@@ -43,9 +43,52 @@ namespace EurasianTest.Core.Components.UpdateTaskComponent.Models
             }
         }
 
-        public DateTime Started { set; get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        private String started;
 
-        public DateTime Expired { set; get; }
+        /// <summary>
+        /// Дата начала задачи
+        /// </summary>
+        public String Started
+        {
+            set
+            {
+                this.started = value;
+            }
+            get
+            {
+                return this.started?.Trim() ?? "";
+            }
+        }
+
+        public DateTime GetStarted()
+        {
+            return DateTime.Parse(this.started);
+        }
+
+        private String expired;
+
+        /// <summary>
+        /// Дата завершения задачи
+        /// </summary>
+        public String Expired
+        {
+            set
+            {
+                this.expired = value;
+            }
+            get
+            {
+                return this.expired?.Trim() ?? "";
+            }
+        }
+
+        public DateTime GetExpired()
+        {
+            return DateTime.Parse(this.expired);
+        }
     }
 
     public class UpdateTaskViewModelValidator : AbstractValidator<UpdateTaskViewModel>
@@ -54,6 +97,20 @@ namespace EurasianTest.Core.Components.UpdateTaskComponent.Models
         {
             RuleFor(x => x.Description).MinimumLength(3).WithMessage("Минимальная длинна 3 символа");
             RuleFor(x => x.Name).MinimumLength(3).WithMessage("Минимальная длинна 3 символа");
+            RuleFor(x => x.Expired).Custom((item, context) =>
+            {
+                if (!DateTime.TryParse(item, out DateTime dateTime))
+                {
+                    context.AddFailure("Невалидная дата");
+                }
+            });
+            RuleFor(x => x.Started).Custom((item, context) =>
+            {
+                if (!DateTime.TryParse(item, out DateTime dateTime))
+                {
+                    context.AddFailure("Невалидная дата");
+                }
+            });
         }
     }
 }

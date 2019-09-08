@@ -18,8 +18,8 @@ namespace EurasianTest.Core.Components.AddTaskComponent.Models
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.ProjectId, opt => opt.MapFrom(src => src.ProjectId))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => TaskStatus.New))
-                .ForMember(dest => dest.Started, opt => opt.MapFrom(src => src.Started))
-                .ForMember(dest => dest.Expired, opt => opt.MapFrom(src => src.Expired))
+                .ForMember(dest => dest.Started, opt => opt.MapFrom(src => src.GetStarted()))
+                .ForMember(dest => dest.Expired, opt => opt.MapFrom(src => src.GetExpired()))
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId));
 
         }

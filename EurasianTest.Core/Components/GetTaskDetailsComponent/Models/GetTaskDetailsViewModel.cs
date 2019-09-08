@@ -9,6 +9,11 @@ namespace EurasianTest.Core.Components.GetTaskDetailsComponent.Models
 {
     public class GetTaskDetailsViewModel
     {
+        public GetTaskDetailsViewModel()
+        {
+            
+        }
+
         public List<UserViewModel> Users { set; get; }
 
         /// <summary>
@@ -43,8 +48,8 @@ namespace EurasianTest.Core.Components.GetTaskDetailsComponent.Models
 
         public Int64 UserId { set; get; }
 
-        public DateTime Started { set; get; }
+        public String Started { set; get; }
 
-        public DateTime Expired { set; get; }
+        public String Expired { set; get; }
     }
 }

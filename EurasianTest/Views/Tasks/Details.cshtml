@@ -42,7 +42,7 @@
                                     </b>
                                 </td>
                                 <td>
-                                    @Model.Started.ToShortDateString()
+                                    @Model.Started
                                 </td>
                             </tr>
                             <tr>
@@ -52,7 +52,7 @@
                                     </b>
                                 </td>
                                 <td>
-                                    @Model.Expired.ToShortDateString()
+                                    @Model.Expired
                                 </td>
                             </tr>
                         </tbody>
@@ -76,10 +76,12 @@ else
                     <div class="form-group">
                         <label>Дата начала</label>
                         <input asp-for="Started" type="text" class="form-control" />
+                        <span asp-validation-for="Started" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label>Дата завершения</label>
                         <input asp-for="Expired" type="text" class="form-control" />
+                        <span asp-validation-for="Expired" class="text-danger"></span>
                     </div>
                     <button type="submit" class="btn btn-outline-success">Сохранить</button>
                 </form>
@@ -118,29 +120,3 @@ else
         </div>
     </div>
 }
-
-<script>
-    window.onload = function () {
-        @* Обработчик ошибок валидации 
-
-        @{ var errorsContainer = EurasianTest.Code.ValidationHelper._ValidationHelper.GetErrors(TempData); }
-        var errorContainer = {
-            ElementId: '@errorsContainer.ElementId', Errors: [
-                @foreach (var item in errorsContainer.Errors)
-                {
-                    @($"{{ ElementId: '#{item.ElementId}', ErrorMessage: '{item.ErrorMessage}', 'IncorrectValue': {item.IncorrectValue ?? "" } }},");
-                }
-            ]
-        };
-
-
-
-        if (errorContainer != null) {
-            errorContainer.Errors.forEach(function (element) {
-                console.log('#' + errorContainer.ElementId);
-                console.log(element.IncorrectValue);
-                $('#' + errorContainer.ElementId).children('#' + element.ElementId).val(element.IncorrectValue);
-            });
-        }*@
-    }
-</script>
