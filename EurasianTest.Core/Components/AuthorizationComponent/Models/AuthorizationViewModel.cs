@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentValidation;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -46,5 +47,15 @@ namespace EurasianTest.Core.Components.AuthorizationComponent.Models
         }
 
         public Boolean RememberMe { set; get; }
+    }
+
+    public class AuthorizationViewModelValidator: AbstractValidator<AuthorizationViewModel>
+    {
+        public AuthorizationViewModelValidator()
+        {
+            RuleFor(x => x.Login).EmailAddress().WithMessage("Должно содержать действительный адрес эл. почты");
+            RuleFor(x => x.Password).NotEmpty().WithMessage("Не может быть пустым");
+            RuleFor(x => x.Password).MinimumLength(6).WithMessage("Минимальная длина 6 символов");
+        }
     }
 }

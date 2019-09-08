@@ -31,7 +31,7 @@ namespace EurasianTest.Core.Components.AddProjectAdministratorComponent
             // добавим нового
             if (projectAdmin == null)
             {
-                projectAdmin = new ProjectAdministrator(request.UserId, request.Id);
+                projectAdmin = new ProjectAdministrator(request.UserId.Value, request.Id);
                 await this.dataContext.AddAsync(projectAdmin);
                 await this.dataContext.SaveChangesAsync();
             }

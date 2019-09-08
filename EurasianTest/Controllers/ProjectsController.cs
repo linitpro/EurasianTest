@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EurasianTest.Code.ValidationHelper;
 using EurasianTest.Core.Components.AddProjectAdministratorComponent;
 using EurasianTest.Core.Components.AddProjectAdministratorComponent.Models;
 using EurasianTest.Core.Components.AddProjectComponent;
@@ -61,10 +62,13 @@ namespace EurasianTest.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> Add(AddProjectViewModel model)
         {
+            if(!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
             var command = this.unitOfWork.Create<AddProjectCommand>();
             var response = await command.ExecuteAsync(model);
-
-
             return RedirectToAction("Index", "Projects");
         }
 
@@ -75,6 +79,7 @@ namespace EurasianTest.Controllers
         /// <returns></returns>
         [Authorize(Roles = "Administrator")]
         [HttpGet("[action]/{id}")]
+        [ImportModelState]
         public async Task<IActionResult> Details([FromRoute]Int64 id)
         {
             var command = this.unitOfWork.Create<GetProjectDetailsCommand>();
@@ -89,10 +94,19 @@ namespace EurasianTest.Controllers
         /// <returns></returns>
         [Authorize(Roles = "Administrator")]
         [HttpPost("[action]")]
+        [ExportModelState]
         public async Task<IActionResult> Update([FromForm]UpdateProjectViewModel model)
         {
-            var command = this.unitOfWork.Create<UpdateProjectCommand>();
-            await command.ExecuteAsync(model);
+            if(ModelState.IsValid)
+            {
+                var command = this.unitOfWork.Create<UpdateProjectCommand>();
+                await command.ExecuteAsync(model);
+            }
+            else
+            {
+
+            }
+            
             return Redirect($"/Projects/Details/{model.Id}");
         }
 
@@ -118,10 +132,14 @@ namespace EurasianTest.Controllers
         /// <returns></returns>
         [Authorize(Roles = "Administrator")]
         [HttpPost("[action]")]
+        [ExportModelState]
         public async Task<IActionResult> AddProjectAdministrator([FromForm]AddProjectAdministratorViewModel model)
         {
-            var command = this.unitOfWork.Create<AddProjectAdministratorCommand>();
-            await command.ExecuteAsync(model);
+            if(ModelState.IsValid)
+            {
+                var command = this.unitOfWork.Create<AddProjectAdministratorCommand>();
+                await command.ExecuteAsync(model);
+            }
 
             return Redirect($"/Projects/Details/{model.Id}");
         }

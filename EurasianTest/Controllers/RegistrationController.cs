@@ -30,6 +30,11 @@ namespace EurasianTest.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(OuterRegistrationViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
             var registerCommand = this.unitOfWork.Create<OuterRegistrationCommand>();
             await registerCommand.ExecuteAsync(model);
 

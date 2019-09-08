@@ -4,16 +4,21 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @model EurasianTest.Core.Components.GetProjectDetailsComponent.Models.GetProjectDetailsViewModel
-
+@inject EurasianTest.Core.Infrastructure.IAuthContext auth
 <h1>Проект: @Model.Name</h1>
 
 <div class="container">
-    <form asp-controller="Projects" asp-action="Update" method="post">
-        <label>Название</label>
-        <input asp-for="Id" hidden />
-        <input asp-for="Name" class="form-control" />
-        <button type="submit" class="btn btn-outline-success">Сохранить</button>
-    </form>
+    @if (auth.CurrentUser.Role != EurasianTest.DAL.Entities.Enums.Role.User)
+    {
+        <form asp-controller="Projects" asp-action="Update" method="post">
+            <label>Название</label>
+            <input asp-for="Id" hidden />
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+            <br />
+            <button type="submit" class="btn btn-outline-success">Сохранить</button>
+        </form>
+    }
 </div>
 <hr />
 <div class="container">
@@ -32,19 +37,29 @@
             </table>
         </div>
         <div class="col-md-6">
-            <form method="post" asp-action="AddProjectAdministrator" asp-controller="Projects">
-                <h5>Добавить пользователя проекта</h5>
-                <input type="text" hidden asp-for="Id" />
-                <select id="UserId" name="UserId" asp-items="@(new SelectList(Model.Users, nameof(GetProjectDetailsUserViewModel.UserId), nameof(GetProjectDetailsUserViewModel.EmailWithRole)))" class="form-control col-md-3"></select>
-                <button type="submit" class="btn btn-outline-success">Добавить</button>
-            </form>
+            @if (auth.CurrentUser.Role != EurasianTest.DAL.Entities.Enums.Role.User)
+            {
+                <form method="post" asp-action="AddProjectAdministrator" asp-controller="Projects">
+                    <h5>Добавить пользователя проекта</h5>
+                    <input type="text" hidden asp-for="Id" />
+                    <select id="UserId" name="UserId" asp-items="@(new SelectList(Model.Users, nameof(GetProjectDetailsUserViewModel.UserId), nameof(GetProjectDetailsUserViewModel.EmailWithRole)))" class="form-control col-md-4">
+                        <option value=""></option>
+                    </select>
+                    <span class="text-danger" asp-validation-for="UserId"></span>
+                    <hr />
+                    <button type="submit" class="btn btn-outline-success form-control col-md-4">Добавить</button>
+                </form>
+            }
         </div>
     </div>
 </div>
 <hr />
-<div class="container">
-    <form method="post" asp-action="Delete" asp-controller="Projects">
-        <input hidden asp-for="Id" />
-        <button type="submit" class="btn btn-danger">Удалить проект</button>
-    </form>
-</div>
+@if (auth.CurrentUser.Role != EurasianTest.DAL.Entities.Enums.Role.User)
+{
+    <div class="container">
+        <form method="post" asp-action="Delete" asp-controller="Projects">
+            <input hidden asp-for="Id" />
+            <button type="submit" class="btn btn-danger">Удалить проект</button>
+        </form>
+    </div>
+}

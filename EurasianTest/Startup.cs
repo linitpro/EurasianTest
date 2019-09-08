@@ -5,7 +5,9 @@ using System.Reflection;
 using System.Threading.Tasks;
 using AutoMapper;
 using EurasianTest.Core;
+using EurasianTest.Core.Components.AuthorizationComponent.Models;
 using EurasianTest.DAL;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -38,7 +40,10 @@ namespace EurasianTest
             });
 
 
-            services.AddMvc().AddRazorOptions(options => { options.AllowRecompilingViewsOnFileChange = true; }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc()
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AuthorizationViewModelValidator>())
+                .AddRazorOptions(options => { options.AllowRecompilingViewsOnFileChange = true; })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
             {

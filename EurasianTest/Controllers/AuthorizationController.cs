@@ -31,6 +31,11 @@ namespace EurasianTest.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(AuthorizationViewModel model)
         {
+            if(!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
             var command = this.unitOfWork.Create<AuthorizationCommand>();
             var user = await command.ExecuteAsync(model);
 

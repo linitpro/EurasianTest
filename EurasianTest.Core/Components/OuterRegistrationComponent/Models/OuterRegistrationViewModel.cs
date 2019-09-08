@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentValidation;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -29,7 +30,7 @@ namespace EurasianTest.Core.Components.OuterRegistrationComponent.Models
             }
             get
             {
-                return this.email.Trim().ToLower();
+                return this.email?.Trim().ToLower() ?? "";
             }
         }
 
@@ -44,8 +45,18 @@ namespace EurasianTest.Core.Components.OuterRegistrationComponent.Models
             }
             get
             {
-                return this.password.Trim();
+                return this.password?.Trim() ?? "";
             }
+        }
+    }
+
+    public class OuterRegistrationViewModelValidator : AbstractValidator<OuterRegistrationViewModel>
+    {
+        public OuterRegistrationViewModelValidator()
+        {
+            RuleFor(x => x.Email).EmailAddress().WithMessage("Должно содержать действительный адрес эл. почты");
+            RuleFor(x => x.Password).NotEmpty().WithMessage("Не может быть пустым");
+            RuleFor(x => x.Password).MinimumLength(6).WithMessage("Минимальная длина 6 символов");
         }
     }
 }

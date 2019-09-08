@@ -9,15 +9,18 @@
     <form class="form-signin" method="post">
         <h1 class="h3 mb-3 font-weight-normal">Авторизация</h1>
         <label for="inputEmail" class="sr-only">Email address</label>
-        <input asp-for="Login" type="email" id="inputEmail" class="form-control" placeholder="Email" required="" autofocus="">
+        <input asp-for="Login" class="form-control" placeholder="Email">
+        <span class="text-danger" asp-validation-for="Login"></span>
         <label for="inputPassword" class="sr-only">Password</label>
-        <input asp-for="Password" type="password" id="inputPassword" class="form-control" placeholder="Пароль" required="">
+        <input asp-for="Password" type="password" id="inputPassword" class="form-control" placeholder="Пароль">
+        <span  class="text-danger" asp-validation-for="Password"></span>
         <div class="checkbox mb-3">
             <label>
                 <input asp-for="RememberMe" type="checkbox"> Remember me
             </label>
         </div>
         <button type="submit" class="btn btn-success btn-block">Войти</button>
+        <hr />
         <a asp-controller="Registration" asp-action="Index">Регистрация</a>
     </form>
 </div>

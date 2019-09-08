@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentValidation;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -21,8 +22,17 @@ namespace EurasianTest.Core.Components.AddProjectComponent.Model
             }
             get
             {
-                return this.name.Trim();
+                return this.name?.Trim() ?? "";
             }
+        }
+    }
+
+    public class AddProjectViewModelValidator : AbstractValidator<AddProjectViewModel>
+    {
+        public AddProjectViewModelValidator()
+        {
+            RuleFor(x => x.Name).NotEmpty().WithMessage("Не может быть пустым");
+            RuleFor(x => x.Name).MinimumLength(3).WithMessage("Минимальная длина 3 символа");
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EurasianTest.Code.ValidationHelper;
 using EurasianTest.Core.Components.AddTaskComponent;
 using EurasianTest.Core.Components.AddTaskComponent.Models;
 using EurasianTest.Core.Components.ChangeTaskStatusComponent;
@@ -19,6 +20,7 @@ using EurasianTest.Core.Components.UpdateTaskComponent.Models;
 using EurasianTest.Core.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace EurasianTest.Controllers
 {
@@ -77,6 +79,11 @@ namespace EurasianTest.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> Add([FromForm]AddTaskViewModel model)
         {
+            if(!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
             var command = this.unitOfWork.Create<AddTaskCommand>();
             var result = await command.ExecuteAsync(model);
 
@@ -87,12 +94,17 @@ namespace EurasianTest.Controllers
         /// Редактирование задачи
         /// </summary>
         /// <returns></returns>
+        [ExportModelState]
         [Authorize(Roles = "Administrator,ProjectAdministrator")]
         [HttpPost("[action]")]
         public async Task<IActionResult> Update([FromForm]UpdateTaskViewModel model)
         {
-            var command = this.unitOfWork.Create<UpdateTaskCommand>();
-            var result = await command.ExecuteAsync(model);
+            if(ModelState.IsValid)
+            {
+                TempData["ModelState"] = null;
+                var command = this.unitOfWork.Create<UpdateTaskCommand>();
+                var result = await command.ExecuteAsync(model);
+            }
 
             return Redirect($"/Tasks/Details/{model.Id}");
         }
@@ -101,6 +113,7 @@ namespace EurasianTest.Controllers
         /// Редактирование статуса и ответственного задачи
         /// </summary>
         /// <returns></returns>
+        [ExportModelState]
         [Authorize(Roles = "Administrator,ProjectAdministrator")]
         [HttpPost("[action]")]
         public async Task<IActionResult> UpdateStatus([FromForm]ChangeTaskStatusViewModel model)
@@ -115,6 +128,7 @@ namespace EurasianTest.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [ImportModelState]
         [HttpGet("[action]/{id}")]
         public async Task<IActionResult> Details([FromRoute]Int64 id)
         {

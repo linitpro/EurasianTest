@@ -13,7 +13,7 @@
     <div class="card">
         <div class="card-body">
             @if (auth.CurrentUser.Role == EurasianTest.DAL.Entities.Enums.Role.User)
-            {
+{
                 <div>
                     <table>
                         <tbody>
@@ -58,18 +58,20 @@
                         </tbody>
                     </table>
                 </div>
-            }
-            else
-            {
+}
+else
+{
                 <form asp-action="Update" method="post" class="">
                     <input hidden asp-for="Id" />
                     <div class="form-group">
                         <label>Название</label>
                         <input asp-for="Name" type="text" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label>Описание</label>
                         <input asp-for="Description" type="text" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label>Дата начала</label>
@@ -81,7 +83,7 @@
                     </div>
                     <button type="submit" class="btn btn-outline-success">Сохранить</button>
                 </form>
-            }
+}
         </div>
     </div>
 
@@ -116,3 +118,29 @@
         </div>
     </div>
 }
+
+<script>
+    window.onload = function () {
+        @* Обработчик ошибок валидации 
+
+        @{ var errorsContainer = EurasianTest.Code.ValidationHelper._ValidationHelper.GetErrors(TempData); }
+        var errorContainer = {
+            ElementId: '@errorsContainer.ElementId', Errors: [
+                @foreach (var item in errorsContainer.Errors)
+                {
+                    @($"{{ ElementId: '#{item.ElementId}', ErrorMessage: '{item.ErrorMessage}', 'IncorrectValue': {item.IncorrectValue ?? "" } }},");
+                }
+            ]
+        };
+
+
+
+        if (errorContainer != null) {
+            errorContainer.Errors.forEach(function (element) {
+                console.log('#' + errorContainer.ElementId);
+                console.log(element.IncorrectValue);
+                $('#' + errorContainer.ElementId).children('#' + element.ElementId).val(element.IncorrectValue);
+            });
+        }*@
+    }
+</script>

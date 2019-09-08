@@ -19,6 +19,8 @@ namespace EurasianTest.Core.Components.GetProjectDetailsComponent.Models
         /// </summary>
         public String Name { set; get; }
 
+        public Int64? UserId { set; get; }
+
         /// <summary>
         /// Администраторы проекта
         /// </summary>

@@ -1,5 +1,6 @@
 ﻿using EurasianTest.Core.Components.DictionaryComponents.GetProjectsDictionaryComponent.Models;
 using EurasianTest.Core.Components.DictionaryComponents.GetUsersDictionaryComponent.Models;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,18 +13,44 @@ namespace EurasianTest.Core.Components.AddTaskComponent.Models
 
         public AddTaskViewModel(List<UserViewModel> users)
         {
+            this.Description = "";
+            this.Name = "";
             this.Users = users;
         }
+
+        private String description;
 
         /// <summary>
         /// Описание задачи
         /// </summary>
-        public String Description { set; get; }
+        public String Description
+        {
+            set
+            {
+                this.description = value;
+            }
+            get
+            {
+                return this.description?.Trim() ?? "";
+            }
+        }
+
+        private String name;
 
         /// <summary>
         /// Название задачи
         /// </summary>
-        public String Name { set; get; }
+        public String Name
+        {
+            set
+            {
+                this.name = value;
+            }
+            get
+            {
+                return this.name?.Trim() ?? "";
+            }
+        }
 
         /// <summary>
         /// Проект к которому добавляется задача
@@ -54,5 +81,14 @@ namespace EurasianTest.Core.Components.AddTaskComponent.Models
         /// Дата завершения задачи
         /// </summary>
         public DateTime Expired { set; get; }
+    }
+
+    public class AddTaskViewModelValidator : AbstractValidator<AddTaskViewModel>
+    {
+        public AddTaskViewModelValidator()
+        {
+            RuleFor(x => x.Description).MinimumLength(3).WithMessage("Минимальная длинна 3 символа");
+            RuleFor(x => x.Name).MinimumLength(3).WithMessage("Минимальная длинна 3 символа");
+        }
     }
 }

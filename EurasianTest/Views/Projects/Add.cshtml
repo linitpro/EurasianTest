@@ -4,10 +4,12 @@
 }
 @model EurasianTest.Core.Components.AddProjectComponent.Model.AddProjectViewModel
 
-<h1>Add</h1>
+<h1>Добавить проект</h1>
 
 <form asp-controller="Projects" asp-action="Add" method="post">
     <label>Название</label>
-    <input asp-for="Name" type="text" class="form-control" />
-    <button class="btn btn-outline-success" type="submit">Добавить</button>
+    <input asp-for="Name" type="text" class="form-control col-sm-3" />
+    <span asp-validation-for="Name" class="text-danger"></span>
+    <hr />
+    <button class="btn btn-outline-success form-control col-sm-3 form-control" type="submit">Добавить</button>
 </form>
